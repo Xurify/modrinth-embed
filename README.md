@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Modrinth Embed
 
-## Getting Started
+A modern Next.js application for embedding Modrinth projects anywhere on the web. This project provides multiple ways to showcase Modrinth projects in your website, from full-featured embeds to compact badges.
 
-First, run the development server:
+## Features
+
+- 🎯 Server and Client Components for maximum flexibility
+- 🎨 Modern, responsive design with dark mode support
+- 🚀 Static badge generation API
+- ⚡ Smart caching for optimal performance
+- 🌐 WCAG compliant accessibility
+- 📱 Mobile-friendly interface
+
+## Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/modrinth-embed.git
+cd modrinth-embed
+
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Server Component
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```tsx
+import { ModrinthEmbed } from 'modrinth-embed'
 
-## Learn More
+export default function Page() {
+  return <ModrinthEmbed projectId="AANobbMI" />
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Client Component
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```tsx
+import { ClientModrinthEmbed } from 'modrinth-embed'
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+export default function Page() {
+  return <ClientModrinthEmbed projectId="AANobbMI" />
+}
+```
 
-## Deploy on Vercel
+### Compact Badge
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```tsx
+import { ModrinthBadge } from 'modrinth-embed'
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+export default function Page() {
+  return (
+    <ModrinthBadge
+      projectId="AANobbMI"
+      showDownloads={true}
+      showVersion={true}
+    />
+  )
+}
+```
+
+### Static Badge API
+
+```html
+<img src="https://your-domain.com/api/badge/AANobbMI" alt="Modrinth Project" />
+
+<!-- With options -->
+<img
+  src="https://your-domain.com/api/badge/AANobbMI?theme=dark&style=compact"
+  alt="Modrinth Project"
+/>
+```
+
+## API Options
+
+### Badge API Parameters
+
+- `theme`: `light` (default) | `dark`
+- `style`: `default` (default) | `compact`
+- `showDownloads`: `true` (default) | `false`
+- `showVersion`: `true` (default) | `false`
+
+## Development
+
+```bash
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm run start
+
+# Run linter
+npm run lint
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT License - see LICENSE for details.
+
+## Credits
+
+- Built with [Next.js](https://nextjs.org/)
+- Data from [Modrinth API](https://docs.modrinth.com/api-spec)
+- Styling with [Tailwind CSS](https://tailwindcss.com/)
