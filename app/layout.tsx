@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -39,9 +39,13 @@ export const metadata: Metadata = {
     ],
   },
   metadataBase: new URL("https://modrinth-embed.vercel.app"),
-  themeColor: "#10B981", // Emerald-500 color
-  viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#10B981",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
