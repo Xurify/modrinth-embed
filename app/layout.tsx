@@ -13,18 +13,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Modrinth Embed",
+  title: "Modrinth Embeds",
   description:
     "A modern way to embed Modrinth projects on your website. Choose between server and client components, or use the compact badge format.",
   openGraph: {
-    title: "Modrinth Embed - Modern Project Embeds",
+    title: "Modrinth Embeds",
     description:
       "Easily embed Modrinth projects on your website with modern React components.",
     images: ["/og-image.svg"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Modrinth Embed - Modern Project Embeds",
+    title: "Modrinth Embeds",
     description:
       "Easily embed Modrinth projects on your website with modern React components.",
     images: ["/og-image.svg"],
