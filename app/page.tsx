@@ -6,7 +6,7 @@ export default function Home() {
   const projectIds = {
     sodium: "AANobbMI",
     iris: "YL57xq9U",
-    lithium: "gvQqBUqZ",
+    elytraAssistant: "IRm6z3S7",
   };
 
   return (
@@ -67,10 +67,10 @@ export default function Home() {
                       </svg>
                       React Component
                     </h4>
-                    <div className="space-y-4">
+                    <div className="space-y-4 space-x-4">
                       <ModrinthBadge projectId={projectIds.sodium} />
                       <ModrinthBadge projectId={projectIds.iris} />
-                      <ModrinthBadge projectId={projectIds.lithium} />
+                      <ModrinthBadge projectId={projectIds.elytraAssistant} />
                     </div>
                   </div>
 
@@ -105,8 +105,8 @@ export default function Home() {
                         height="70"
                       />
                       <img
-                        src={`/api/badge/${projectIds.lithium}`}
-                        alt="Lithium"
+                        src={`/api/badge/${projectIds.elytraAssistant}`}
+                        alt="elytraAssistant"
                         width="250"
                         height="70"
                       />
@@ -214,7 +214,7 @@ import ModrinthBadge from './components/ModrinthBadge';
                   Client Component
                 </h3>
                 <div className="max-w-2xl">
-                  <ClientModrinthEmbed projectId={projectIds.lithium} />
+                  <ClientModrinthEmbed projectId={projectIds.elytraAssistant} />
                 </div>
               </div>
             </div>
