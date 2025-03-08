@@ -1,15 +1,56 @@
 import { z } from 'zod';
 
+const GalleryItemSchema = z.object({
+  url: z.string(),
+  raw_url: z.string(),
+  featured: z.boolean(),
+  title: z.string().nullable(),
+  description: z.string().nullable(),
+  created: z.string(),
+  ordering: z.number(),
+});
+
 export const ModrinthProjectSchema = z.object({
   id: z.string(),
   slug: z.string(),
+  project_type: z.string(),
+  team: z.string(),
+  organization: z.string().nullable(),
   title: z.string(),
   description: z.string(),
+  body: z.string(),
+  body_url: z.string().nullable(),
+  published: z.string(),
+  updated: z.string(),
+  approved: z.string().nullable(),
+  queued: z.string().nullable(),
+  status: z.string(),
+  requested_status: z.string().nullable(),
+  moderator_message: z.string().nullable(),
+  license: z.object({
+    id: z.string(),
+    name: z.string(),
+    url: z.string().nullable()
+  }),
   downloads: z.number(),
+  followers: z.number(),
+  categories: z.array(z.string()),
+  additional_categories: z.array(z.string()),
+  loaders: z.array(z.string()),
   versions: z.array(z.string()),
   icon_url: z.string().nullable(),
-  project_type: z.string(),
-  latest_version: z.string().optional(),
+  issues_url: z.string().nullable(),
+  source_url: z.string().nullable(),
+  wiki_url: z.string().nullable(),
+  discord_url: z.string().nullable(),
+  donation_urls: z.array(z.unknown()),
+  gallery: z.array(GalleryItemSchema),
+  color: z.number().nullable(),
+  thread_id: z.string().nullable(),
+  monetization_status: z.string(),
+  client_side: z.string(),
+  server_side: z.string(),
+  game_versions: z.array(z.string()),
 });
 
 export const ModrinthVersionSchema = z.object({

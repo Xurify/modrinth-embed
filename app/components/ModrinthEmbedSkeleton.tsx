@@ -32,7 +32,7 @@ export default function ModrinthEmbedSkeleton({
               {project.title}
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              {project.project_type}
+              by {project.source_url ? project.source_url.split('/')[3] : 'Unknown'}
             </p>
           </div>
         </div>
