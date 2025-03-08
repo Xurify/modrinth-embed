@@ -1,6 +1,5 @@
-import { ModrinthAPI } from "@/lib/api/modrinth";
 import Image from "next/image";
-import { Suspense } from "react";
+import { ModrinthAPI } from "@/lib/api/modrinth";
 import type { ModrinthProject, ModrinthVersion } from "@/lib/api/modrinth";
 
 interface ModrinthEmbedSkeletonProps {
@@ -15,7 +14,9 @@ export default function ModrinthEmbedSkeleton({
   className = "",
 }: ModrinthEmbedSkeletonProps) {
   return (
-    <div className={`w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden ${className}`}>
+    <div
+      className={`w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden ${className}`}
+    >
       <div className="p-4">
         <div className="flex items-center space-x-4">
           {project.icon_url && (
@@ -32,7 +33,10 @@ export default function ModrinthEmbedSkeleton({
               {project.title}
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              by {project.source_url ? project.source_url.split('/')[3] : 'Unknown'}
+              by{" "}
+              {project.source_url
+                ? project.source_url.split("/")[3]
+                : "Unknown"}
             </p>
           </div>
         </div>
@@ -52,9 +56,7 @@ export default function ModrinthEmbedSkeleton({
           </div>
           {latestVersion && (
             <div className="text-sm">
-              <span className="text-gray-500 dark:text-gray-400">
-                Latest:{" "}
-              </span>
+              <span className="text-gray-500 dark:text-gray-400">Latest: </span>
               <span className="font-medium text-gray-900 dark:text-white">
                 {latestVersion.version_number}
               </span>

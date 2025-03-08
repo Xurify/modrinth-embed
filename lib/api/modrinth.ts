@@ -10,6 +10,35 @@ const GalleryItemSchema = z.object({
   ordering: z.number(),
 });
 
+const TeamMemberSchema = z.object({
+  team_id: z.string(),
+  user: z.object({
+    id: z.string(),
+    username: z.string(),
+    avatar_url: z.string(),
+    bio: z.string().nullable(),
+    created: z.string(),
+    role: z.string(),
+    badges: z.number(),
+    auth_providers: z.null(),
+    email: z.string().nullable(),
+    email_verified: z.boolean().nullable(),
+    has_password: z.boolean().nullable(),
+    has_totp: z.boolean().nullable(),
+    payout_data: z.unknown().nullable(),
+    stripe_customer_id: z.string().nullable(),
+    allow_friend_requests: z.boolean().nullable(),
+    github_id: z.number().nullable(),
+  }),
+  role: z.string(),
+  permissions: z.number().nullable(),
+  accepted: z.boolean(),
+  payouts_split: z.number().nullable(),
+  ordering: z.number().nullable(),
+});
+
+export type TeamMember = z.infer<typeof TeamMemberSchema>;
+
 export const ModrinthProjectSchema = z.object({
   id: z.string(),
   slug: z.string(),
@@ -81,6 +110,21 @@ export class ModrinthAPI {
 
     const data = await response.json();
     return ModrinthProjectSchema.parse(data);
+  }
+
+  static async getTeamMembers(teamId: string): Promise<TeamMember[]> {
+    const response = await fetch(`${this.BASE_URL}/team/${teamId}/members`, {
+      headers: {
+        'User-Agent': 'modrinth-embed/1.0.0',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch team members: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return z.array(TeamMemberSchema).parse(data);
   }
 
   static async getVersions(id: string): Promise<ModrinthVersion[]> {
