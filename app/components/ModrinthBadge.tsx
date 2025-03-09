@@ -18,6 +18,10 @@ export default async function ModrinthBadge({
   const versions = showVersion ? await ModrinthAPI.getVersions(projectId) : [];
   const latestVersion = versions[0];
 
+  if (!project) {
+    return null;
+  }
+
   return (
     <a
       href={`https://modrinth.com/project/${project.slug}`}

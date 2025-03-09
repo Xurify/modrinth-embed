@@ -11,6 +11,10 @@ export default async function ModrinthEmbed({ projectId, className }: ModrinthEm
   const versions = await ModrinthAPI.getVersions(projectId);
   const latestVersion = versions[0];
 
+  if (!project) {
+    return null;
+  }
+
   return (
     <ModrinthEmbedSkeleton
       project={project}
