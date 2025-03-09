@@ -102,8 +102,6 @@ export class ModrinthAPI {
       );
       const response = await this.fetch(url);
 
-      console.log("ModrinthAPI", response, url);
-
       if (!response.ok) {
         throw new Error(`Failed to fetch project: ${response.statusText}`);
       }
