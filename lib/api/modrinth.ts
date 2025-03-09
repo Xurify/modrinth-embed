@@ -93,7 +93,18 @@ export const ModrinthVersionSchema = z.object({
 export type ModrinthProject = z.infer<typeof ModrinthProjectSchema>;
 export type ModrinthVersion = z.infer<typeof ModrinthVersionSchema>;
 
+/**
+ * Modrinth API wrapper
+ * Based on the Modrinth API v2
+ * https://api.modrinth.com/
+ * https://docs.modrinth.com/
+ */
 export class ModrinthAPI {
+  /**
+   * Get a project by ID
+   * @param id - The ID of the project
+   * @returns The project or null if the project is not found
+   */
   static async getProject(id: string): Promise<ModrinthProject | null> {
     try {
       const url = new URL(
@@ -114,6 +125,11 @@ export class ModrinthAPI {
     }
   }
 
+  /**
+   * Get the members of a team
+   * @param teamId - The ID of the team
+   * @returns The members of the team
+   */
   static async getTeamMembers(teamId: string): Promise<TeamMember[]> {
     try {
       const url = new URL(
@@ -134,6 +150,11 @@ export class ModrinthAPI {
     }
   }
 
+  /**
+   * Get the versions of a project
+   * @param id - The ID of the project
+   * @returns The versions of the project
+   */
   static async getVersions(id: string): Promise<ModrinthVersion[]> {
     try {
       const url = new URL(
@@ -154,6 +175,11 @@ export class ModrinthAPI {
     }
   }
 
+  /**
+   * Format the downloads of a project
+   * @param count - The number of downloads
+   * @returns The formatted downloads
+   */
   static formatDownloads(count: number): string {
     if (count >= 1_000_000) {
       return `${(count / 1_000_000).toFixed(1)}M`;
@@ -164,6 +190,11 @@ export class ModrinthAPI {
     return count.toString();
   }
 
+  /**
+   * Get the cache duration for a project based on the number of downloads
+   * @param downloads - The number of downloads
+   * @returns The cache duration
+   */
   static getCacheDuration(downloads: number): number {
     if (downloads >= 1000000) {
       return 604800; // 1 week
@@ -178,6 +209,12 @@ export class ModrinthAPI {
     }
   }
 
+  /**
+   * Fetch data from Modrinth - Used by internal our API
+   * @param endpoint - The endpoint to fetch from
+   * @param schema - The schema to parse the data with
+   * @returns The data
+   */
   static async fetchFromModrinth<T>(
     endpoint: string,
     schema: z.ZodType<T>
