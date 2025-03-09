@@ -5,19 +5,22 @@ export const runtime = "edge";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const project = await ModrinthAPI.fetchFromModrinth(
-      `/project/${params.id}`,
+      `/project/${id}`,
       ModrinthProjectSchema
     );
 
     const cacheDuration = ModrinthAPI.getCacheDuration(project.downloads);
-    
+
     return NextResponse.json(project, {
       headers: {
-        "Cache-Control": `public, s-maxage=${cacheDuration}, stale-while-revalidate=${cacheDuration * 2}`,
+        "Cache-Control": `public, s-maxage=${cacheDuration}, stale-while-revalidate=${
+          cacheDuration * 2
+        }`,
       },
     });
   } catch (error) {
@@ -27,4 +30,4 @@ export async function GET(
       { status: 500 }
     );
   }
-} 
+}

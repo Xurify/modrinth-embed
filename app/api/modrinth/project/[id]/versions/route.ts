@@ -6,14 +6,15 @@ export const runtime = "edge";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const versions = await ModrinthAPI.fetchFromModrinth(
-      `/project/${params.id}/version`,
+      `/project/${id}/versions`,
       z.array(ModrinthVersionSchema)
     );
-    
+
     return NextResponse.json(versions, {
       headers: {
         "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
@@ -26,4 +27,4 @@ export async function GET(
       { status: 500 }
     );
   }
-} 
+}
