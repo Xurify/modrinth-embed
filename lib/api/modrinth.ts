@@ -210,6 +210,18 @@ export class ModrinthAPI {
   }
 
   /**
+   * Get the author of a project
+   * @param project - The project
+   * @returns The author of the project
+   */
+  static getAuthor(project: ModrinthProject): string {
+    const author = project.source_url
+      ? project.source_url.split("/")[3]
+      : "Unknown";
+    return author;
+  }
+
+  /**
    * Fetch data from Modrinth - Used by internal our API
    * @param endpoint - The endpoint to fetch from
    * @param schema - The schema to parse the data with

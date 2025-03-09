@@ -1,0 +1,224 @@
+import { ImageResponse } from "next/og";
+import { NextRequest } from "next/server";
+import sharp from "sharp";
+import { ModrinthAPI } from "@/lib/api/modrinth";
+
+export const runtime = "nodejs";
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ projectId: string }> }
+) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const theme = searchParams.get("theme") || "light";
+    const style = searchParams.get("style") || "default";
+    const showDownloads = searchParams.get("showDownloads") !== "false";
+    const showVersion = searchParams.get("showVersion") !== "false";
+
+    const { projectId } = await params;
+    const project = await ModrinthAPI.getProject(projectId);
+    const versions = showVersion
+      ? await ModrinthAPI.getVersions(projectId)
+      : [];
+    const latestVersion = versions[0];
+
+    if (!project) {
+      return new Response("Project not found", { status: 404 });
+    }
+
+    let iconUrl = project.icon_url || undefined;
+    if (iconUrl?.toLowerCase().endsWith(".webp")) {
+      const response = await fetch(iconUrl);
+      if (!response.ok) {
+        throw new Error("Failed to fetch icon");
+      }
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+
+      const pngBuffer = await sharp(buffer).png().toBuffer();
+
+      iconUrl = `data:image/png;base64,${pngBuffer.toString("base64")}`;
+    }
+
+    const colors = {
+      light: {
+        bg: "#ffffff",
+        text: "#1f2937",
+        secondaryText: "#6b7280",
+        border: "#e5e7eb",
+      },
+      dark: {
+        bg: "#1f2937",
+        text: "#ffffff",
+        secondaryText: "#9ca3af",
+        border: "#374151",
+      },
+    };
+
+    const themeColors = theme === "dark" ? colors.dark : colors.light;
+    const fontSize = style === "compact" ? 12 : 14;
+    const padding = style === "compact" ? 8 : 12;
+    const iconSize = style === "compact" ? 16 : 24;
+
+    let width = padding * 2 + project.title.length * (fontSize * 0.6);
+    if (project.icon_url) width += iconSize + 8;
+    if (showDownloads)
+      width +=
+        ModrinthAPI.formatDownloads(project.downloads).length *
+          (fontSize * 0.6) +
+        16;
+    if (showVersion && latestVersion)
+      width += latestVersion.version_number.length * (fontSize * 0.6) + 24;
+
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#16181C",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              maxWidth: "100%",
+              width: "900px",
+              backgroundColor: "#26292F",
+              borderRadius: "12px",
+              padding: "32px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <div
+              style={{ display: "flex", alignItems: "flex-start", gap: "24px" }}
+            >
+              {/* Logo */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "110px",
+                  height: "110px",
+                  background:
+                    "linear-gradient(180deg, #10B981 0%, #157a59 100%)",
+                  borderRadius: "8px",
+                  overflow: "hidden",
+                  flexShrink: 0,
+                }}
+              >
+                {iconUrl ? (
+                  <img
+                    src={iconUrl}
+                    width="100%"
+                    height="100%"
+                    style={{
+                      objectFit: "contain",
+                      imageRendering: "crisp-edges",
+                    }}
+                    alt="Mod logo"
+                  />
+                ) : (
+                  <div
+                    style={{
+                      fontSize: "48px",
+                      fontWeight: "bold",
+                      color: "white",
+                    }}
+                  >
+                    {project.title.substring(0, 1)}
+                  </div>
+                )}
+              </div>
+
+              {/* Title and Author */}
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: "4px" }}
+              >
+                <h1
+                  style={{
+                    fontSize: "48px",
+                    fontWeight: "bold",
+                    color: "white",
+                    margin: 0,
+                  }}
+                >
+                  {project.title}
+                </h1>
+                <p
+                  style={{
+                    fontSize: "24px",
+                    color: "#9ca3af",
+                    margin: 0,
+                  }}
+                >
+                  by {ModrinthAPI.getAuthor(project)}
+                </p>
+              </div>
+            </div>
+
+            {/* Description */}
+            <p
+              style={{
+                fontSize: "24px",
+                color: "#e5e7eb",
+                marginTop: "24px",
+                marginBottom: "24px",
+                lineHeight: 1.5,
+              }}
+            >
+              {project.description}
+            </p>
+
+            {/* Stats */}
+            <div
+              style={{
+                display: "flex",
+                gap: "24px",
+                color: "#9ca3af",
+                fontSize: "20px",
+              }}
+            >
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "4px" }}
+              >
+                <span>Downloads:</span>
+                <span>{ModrinthAPI.formatDownloads(project.downloads)}</span>
+              </div>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "4px" }}
+              >
+                <span>Latest:</span>
+                <span>{latestVersion.version_number}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      {
+        width: 1200,
+        height: 400,
+      }
+    );
+  } catch (error) {
+    return new Response(
+      JSON.stringify({
+        error:
+          error instanceof Error ? error.message : "Failed to generate badge",
+      }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+}
