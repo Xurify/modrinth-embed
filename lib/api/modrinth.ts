@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 const GalleryItemSchema = z.object({
   url: z.string(),
@@ -10,7 +10,7 @@ const GalleryItemSchema = z.object({
   ordering: z.number(),
 });
 
-const TeamMemberSchema = z.object({
+export const TeamMemberSchema = z.object({
   team_id: z.string(),
   user: z.object({
     id: z.string(),
@@ -59,7 +59,7 @@ export const ModrinthProjectSchema = z.object({
   license: z.object({
     id: z.string(),
     name: z.string(),
-    url: z.string().nullable()
+    url: z.string().nullable(),
   }),
   downloads: z.number(),
   followers: z.number(),
@@ -94,15 +94,12 @@ export type ModrinthProject = z.infer<typeof ModrinthProjectSchema>;
 export type ModrinthVersion = z.infer<typeof ModrinthVersionSchema>;
 
 export class ModrinthAPI {
-  private static BASE_URL = 'https://api.modrinth.com/v2';
-  private static DEFAULT_CACHE_DURATION = 3600; // 1 hour in seconds
-
   static async getProject(id: string): Promise<ModrinthProject> {
-    const response = await fetch(`${this.BASE_URL}/project/${id}`, {
-      headers: {
-        'User-Agent': 'modrinth-embed/1.0.0',
-      },
-    });
+    const url = new URL(
+      `/api/modrinth/project/${id}`,
+      process.env.NEXT_PUBLIC_APP_URL
+    );
+    const response = await this.fetch(url);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch project: ${response.statusText}`);
@@ -113,11 +110,11 @@ export class ModrinthAPI {
   }
 
   static async getTeamMembers(teamId: string): Promise<TeamMember[]> {
-    const response = await fetch(`${this.BASE_URL}/team/${teamId}/members`, {
-      headers: {
-        'User-Agent': 'modrinth-embed/1.0.0',
-      },
-    });
+    const url = new URL(
+      `/api/modrinth/team/${teamId}/members`,
+      process.env.NEXT_PUBLIC_APP_URL
+    );
+    const response = await this.fetch(url);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch team members: ${response.statusText}`);
@@ -128,11 +125,11 @@ export class ModrinthAPI {
   }
 
   static async getVersions(id: string): Promise<ModrinthVersion[]> {
-    const response = await fetch(`${this.BASE_URL}/project/${id}/version`, {
-      headers: {
-        'User-Agent': 'modrinth-embed/1.0.0',
-      },
-    });
+    const url = new URL(
+      `/api/modrinth/project/${id}/versions`,
+      process.env.NEXT_PUBLIC_APP_URL
+    );
+    const response = await this.fetch(url);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch versions: ${response.statusText}`);
@@ -165,4 +162,35 @@ export class ModrinthAPI {
       return 3600; // 1 hour
     }
   }
-} 
+
+  static async fetchFromModrinth<T>(
+    endpoint: string,
+    schema: z.ZodType<T>
+  ): Promise<T> {
+    const MODRINTH_API_BASE = "https://api.modrinth.com/v2";
+    const response = await fetch(`${MODRINTH_API_BASE}${endpoint}`, {
+      headers: {
+        "User-Agent": "modrinth-embed/1.0.0",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch from Modrinth: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return schema.parse(data);
+  }
+
+  private static fetch(
+    url: string | URL,
+    options: RequestInit = {}
+  ): Promise<Response> {
+    return fetch(url, {
+      ...options,
+      next: {
+        revalidate: 3600,
+      },
+    });
+  }
+}
