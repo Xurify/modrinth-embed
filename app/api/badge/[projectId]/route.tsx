@@ -23,6 +23,10 @@ export async function GET(
       : [];
     const latestVersion = versions[0];
 
+    if (!project) {
+      return new Response("Project not found", { status: 404 });
+    }
+
     let iconUrl = project.icon_url || undefined;
     if (iconUrl?.toLowerCase().endsWith(".webp")) {
       const response = await fetch(iconUrl);

@@ -94,56 +94,66 @@ export type ModrinthProject = z.infer<typeof ModrinthProjectSchema>;
 export type ModrinthVersion = z.infer<typeof ModrinthVersionSchema>;
 
 export class ModrinthAPI {
-  static async getProject(id: string): Promise<ModrinthProject> {
+  static async getProject(id: string): Promise<ModrinthProject | null> {
     try {
       const url = new URL(
         `/api/modrinth/project/${id}`,
         process.env.NEXT_PUBLIC_APP_URL
       );
       const response = await this.fetch(url);
-  
-      console.log('ModrinthAPI', response, url);
-  
+
+      console.log("ModrinthAPI", response, url);
+
       if (!response.ok) {
         throw new Error(`Failed to fetch project: ${response.statusText}`);
       }
-  
+
       const data = await response.json();
       return ModrinthProjectSchema.parse(data);
     } catch (error) {
-      console.error('Error fetching project:', error);
-      throw error;
+      console.error("Error fetching project:", error);
+      return null;
     }
   }
 
   static async getTeamMembers(teamId: string): Promise<TeamMember[]> {
-    const url = new URL(
-      `/api/modrinth/team/${teamId}/members`,
-      process.env.NEXT_PUBLIC_APP_URL
-    );
-    const response = await this.fetch(url);
+    try {
+      const url = new URL(
+        `/api/modrinth/team/${teamId}/members`,
+        process.env.NEXT_PUBLIC_APP_URL
+      );
+      const response = await this.fetch(url);
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch team members: ${response.statusText}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch team members: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return z.array(TeamMemberSchema).parse(data);
+    } catch (error) {
+      console.error("Error fetching team members:", error);
+      return [];
     }
-
-    const data = await response.json();
-    return z.array(TeamMemberSchema).parse(data);
   }
 
   static async getVersions(id: string): Promise<ModrinthVersion[]> {
-    const url = new URL(
-      `/api/modrinth/project/${id}/versions`,
-      process.env.NEXT_PUBLIC_APP_URL
-    );
-    const response = await this.fetch(url);
+    try {
+      const url = new URL(
+        `/api/modrinth/project/${id}/versions`,
+        process.env.NEXT_PUBLIC_APP_URL
+      );
+      const response = await this.fetch(url);
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch versions: ${response.statusText}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch versions: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return z.array(ModrinthVersionSchema).parse(data);
+    } catch (error) {
+      console.error("Error fetching versions:", error);
+      return [];
     }
-
-    const data = await response.json();
-    return z.array(ModrinthVersionSchema).parse(data);
   }
 
   static formatDownloads(count: number): string {
