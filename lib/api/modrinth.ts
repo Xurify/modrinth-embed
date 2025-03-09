@@ -95,20 +95,25 @@ export type ModrinthVersion = z.infer<typeof ModrinthVersionSchema>;
 
 export class ModrinthAPI {
   static async getProject(id: string): Promise<ModrinthProject> {
-    const url = new URL(
-      `/api/modrinth/project/${id}`,
-      process.env.NEXT_PUBLIC_APP_URL
-    );
-    const response = await this.fetch(url);
-
-    console.log('ModrinthAPI', response, url);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch project: ${response.statusText}`);
+    try {
+      const url = new URL(
+        `/api/modrinth/project/${id}`,
+        process.env.NEXT_PUBLIC_APP_URL
+      );
+      const response = await this.fetch(url);
+  
+      console.log('ModrinthAPI', response, url);
+  
+      if (!response.ok) {
+        throw new Error(`Failed to fetch project: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      return ModrinthProjectSchema.parse(data);
+    } catch (error) {
+      console.error('Error fetching project:', error);
+      throw error;
     }
-
-    const data = await response.json();
-    return ModrinthProjectSchema.parse(data);
   }
 
   static async getTeamMembers(teamId: string): Promise<TeamMember[]> {
