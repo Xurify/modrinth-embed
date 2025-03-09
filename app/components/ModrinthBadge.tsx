@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ModrinthAPI } from '@/lib/api/modrinth';
+import ModrinthBadgeLoadingSkeleton from './ModrinthBadgeLoadingSkeleton';
 
 interface ModrinthBadgeProps {
   projectId: string;
@@ -7,6 +8,7 @@ interface ModrinthBadgeProps {
   showDownloads?: boolean;
   showVersion?: boolean;
 }
+
 
 export default async function ModrinthBadge({
   projectId,
@@ -19,7 +21,7 @@ export default async function ModrinthBadge({
   const latestVersion = versions[0];
 
   if (!project) {
-    return null;
+    return <ModrinthBadgeLoadingSkeleton className={className} />;
   }
 
   return (

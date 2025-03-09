@@ -1,5 +1,6 @@
 import { ModrinthAPI } from "@/lib/api/modrinth";
 import ModrinthEmbedSkeleton from "./ModrinthEmbedSkeleton";
+import ModrinthEmbedLoadingSkeleton from "./ModrinthEmbedLoadingSkeleton";
 
 interface ModrinthEmbedProps {
   projectId: string;
@@ -12,7 +13,7 @@ export default async function ModrinthEmbed({ projectId, className }: ModrinthEm
   const latestVersion = versions[0];
 
   if (!project) {
-    return null;
+    return <ModrinthEmbedLoadingSkeleton />;
   }
 
   return (
