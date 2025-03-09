@@ -11,7 +11,7 @@ export async function GET(
   try {
     const { id } = await params;
     const versions = await ModrinthAPI.fetchFromModrinth(
-      `/project/${id}/versions`,
+      `/project/${id}/version`,
       z.array(ModrinthVersionSchema)
     );
 
