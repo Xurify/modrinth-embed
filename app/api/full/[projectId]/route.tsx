@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import type { NextRequest } from "next/server";
 import sharp from "sharp";
 import { ModrinthAPI } from "@/lib/api/modrinth";
+import { truncate } from "@/lib/api/utils/utils";
 
 export const runtime = "nodejs";
 
@@ -140,10 +141,11 @@ export async function GET(
                     fontSize: "48px",
                     fontWeight: "bold",
                     color: themeColors.text,
+                    textWrap: "balance",
                     margin: 0,
                   }}
                 >
-                  {project.title}
+                  {truncate(project.title, 22)}
                 </h1>
                 <p
                   style={{
@@ -152,7 +154,7 @@ export async function GET(
                     margin: 0,
                   }}
                 >
-                  by {ModrinthAPI.getAuthor(project)}
+                  by {truncate(ModrinthAPI.getAuthor(project), 50)}
                 </p>
               </div>
             </div>
