@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import sharp from "sharp";
 import { ModrinthAPI } from "@/lib/api/modrinth";
 
@@ -15,6 +15,7 @@ export async function GET(
     const style = searchParams.get("style") || "default";
     const showDownloads = searchParams.get("showDownloads") !== "false";
     const showVersion = searchParams.get("showVersion") !== "false";
+    const showButton = searchParams.get("showButton") !== "false";
 
     const { projectId } = await params;
     const project = await ModrinthAPI.getProject(projectId);
@@ -47,12 +48,16 @@ export async function GET(
         text: "#1f2937",
         secondaryText: "#6b7280",
         border: "#e5e7eb",
+        button: "#10B981",
+        buttonText: "#ffffff",
       },
       dark: {
         bg: "#1f2937",
         text: "#ffffff",
         secondaryText: "#9ca3af",
         border: "#374151",
+        button: "#10B981",
+        buttonText: "#ffffff",
       },
     };
 
@@ -116,7 +121,7 @@ export async function GET(
               >
                 {iconUrl ? (
                   <img
-                    src={iconUrl}
+                    src={iconUrl || "/placeholder.svg"}
                     width="100%"
                     height="100%"
                     style={{
@@ -196,15 +201,57 @@ export async function GET(
                 style={{ display: "flex", alignItems: "center", gap: "4px" }}
               >
                 <span>Latest:</span>
-                <span>{latestVersion.version_number}</span>
+                <span>{latestVersion?.version_number || "N/A"}</span>
               </div>
             </div>
+
+            {/* Button */}
+            {showButton && (
+              <div
+                style={{
+                  marginTop: "24px",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    backgroundColor: "#10B981",
+                    color: "white",
+                    padding: "12px 24px",
+                    borderRadius: "8px",
+                    fontSize: "20px",
+                    fontWeight: "500",
+                    width: "100%",
+                  }}
+                >
+                    View on Modrinth
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ),
       {
         width: 1200,
-        height: 400,
+        height: 600,
       }
     );
   } catch (error) {
