@@ -44,7 +44,8 @@ export async function GET(
 
     const colors = {
       light: {
-        bg: "#ffffff",
+        background: "#ffffff",
+        background2: "#f9fafb",
         text: "#1f2937",
         secondaryText: "#6b7280",
         border: "#e5e7eb",
@@ -52,7 +53,8 @@ export async function GET(
         buttonText: "#ffffff",
       },
       dark: {
-        bg: "#1f2937",
+        background: "#26292F",
+        background2: "#16181C",
         text: "#ffffff",
         secondaryText: "#9ca3af",
         border: "#374151",
@@ -62,19 +64,6 @@ export async function GET(
     };
 
     const themeColors = theme === "dark" ? colors.dark : colors.light;
-    const fontSize = style === "compact" ? 12 : 14;
-    const padding = style === "compact" ? 8 : 12;
-    const iconSize = style === "compact" ? 16 : 24;
-
-    let width = padding * 2 + project.title.length * (fontSize * 0.6);
-    if (project.icon_url) width += iconSize + 8;
-    if (showDownloads)
-      width +=
-        ModrinthAPI.formatDownloads(project.downloads).length *
-          (fontSize * 0.6) +
-        16;
-    if (showVersion && latestVersion)
-      width += latestVersion.version_number.length * (fontSize * 0.6) + 24;
 
     return new ImageResponse(
       (
@@ -86,7 +75,7 @@ export async function GET(
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#16181C",
+            backgroundColor: themeColors.background2,
           }}
         >
           <div
@@ -95,7 +84,7 @@ export async function GET(
               flexDirection: "column",
               maxWidth: "100%",
               width: "900px",
-              backgroundColor: "#26292F",
+              backgroundColor: themeColors.background,
               borderRadius: "12px",
               padding: "32px",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
@@ -135,7 +124,7 @@ export async function GET(
                     style={{
                       fontSize: "48px",
                       fontWeight: "bold",
-                      color: "white",
+                      color: themeColors.text,
                     }}
                   >
                     {project.title.substring(0, 1)}
@@ -151,7 +140,7 @@ export async function GET(
                   style={{
                     fontSize: "48px",
                     fontWeight: "bold",
-                    color: "white",
+                    color: themeColors.text,
                     margin: 0,
                   }}
                 >
@@ -160,7 +149,7 @@ export async function GET(
                 <p
                   style={{
                     fontSize: "24px",
-                    color: "#9ca3af",
+                    color: themeColors.secondaryText,
                     margin: 0,
                   }}
                 >
@@ -173,7 +162,7 @@ export async function GET(
             <p
               style={{
                 fontSize: "24px",
-                color: "#e5e7eb",
+                color: themeColors.text,
                 marginTop: "24px",
                 marginBottom: "24px",
                 lineHeight: 1.5,
@@ -187,29 +176,33 @@ export async function GET(
               style={{
                 display: "flex",
                 gap: "24px",
-                color: "#9ca3af",
+                color: themeColors.secondaryText,
                 fontSize: "20px",
               }}
             >
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "4px" }}
-              >
-                <span>Downloads:</span>
-                <span>{ModrinthAPI.formatDownloads(project.downloads)}</span>
-              </div>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "4px" }}
-              >
-                <span>Latest:</span>
-                <span>{latestVersion?.version_number || "N/A"}</span>
-              </div>
+              {showDownloads && (
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "4px" }}
+                >
+                  <span>Downloads:</span>
+                  <span>{ModrinthAPI.formatDownloads(project.downloads)}</span>
+                </div>
+              )}
+              {showVersion && latestVersion && (
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "4px" }}
+                >
+                  <span>Latest:</span>
+                  <span>{latestVersion?.version_number || "N/A"}</span>
+                </div>
+              )}
             </div>
 
             {/* Button */}
             {showButton && (
               <div
                 style={{
-                  marginTop: "24px",
+                  marginTop: showDownloads || showVersion ? "24px" : "0px",
                   display: "flex",
                   justifyContent: "center",
                 }}
@@ -229,20 +222,20 @@ export async function GET(
                     width: "100%",
                   }}
                 >
-                    View on Modrinth
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                      <polyline points="12 5 19 12 12 19" />
-                    </svg>
+                  View on Modrinth
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
                 </div>
               </div>
             )}
