@@ -76,7 +76,7 @@ export async function GET(
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: themeColors.background2,
+            backgroundColor: showPadding ? themeColors.background2 : "transparent",
           }}
         >
           <div
