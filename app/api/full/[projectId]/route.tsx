@@ -12,7 +12,6 @@ export async function GET(
   try {
     const { searchParams } = new URL(request.url);
     const theme = searchParams.get("theme") || "light";
-    const style = searchParams.get("style") || "default";
     const showDownloads = searchParams.get("showDownloads") !== "false";
     const showVersion = searchParams.get("showVersion") !== "false";
     const showButton = searchParams.get("showButton") !== "false";
