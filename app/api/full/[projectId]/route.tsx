@@ -16,6 +16,7 @@ export async function GET(
     const showDownloads = searchParams.get("showDownloads") !== "false";
     const showVersion = searchParams.get("showVersion") !== "false";
     const showButton = searchParams.get("showButton") !== "false";
+    const showPadding = searchParams.get("showPadding") === "true";
 
     const { projectId } = await params;
     const project = await ModrinthAPI.getProject(projectId);
@@ -244,8 +245,8 @@ export async function GET(
         </div>
       ),
       {
-        width: 1200,
-        height: 600,
+        width: showPadding ? 1200 : 900,
+        height: showPadding ? 600 : 400,
       }
     );
   } catch (error) {
