@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/:id(\\d+).png",
+        source: "/:id.png",
         destination: "/api/badge/:id",
       },
     ];
