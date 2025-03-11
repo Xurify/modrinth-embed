@@ -89,7 +89,9 @@ export async function GET(
               justifyContent: "center",
               width: "110px",
               height: "110px",
-              background: "linear-gradient(180deg, #10B981 0%, #157a59 100%)",
+              ...(!iconUrl && {
+                background: "linear-gradient(180deg, #10B981 0%, #157a59 100%)",
+              }),
               borderRadius: "8px",
               marginRight: "16px",
               overflow: "hidden",
