@@ -176,20 +176,14 @@ export class ModrinthAPI {
   }
 
   /**
-   * Format the downloads of a project
-   * @param count - The number of downloads
-   * @returns The formatted downloads
+   * Format a number with compact notation
+   * @param num The number to format
+   * @returns Formatted number string
    */
-  static formatDownloads(count: number): string {
-    if (count >= 1_000_000) {
-      return `${(count / 1_000_000).toFixed(1)}M`;
-    }
-    if (count >= 1_000) {
-      return `${(count / 1_000).toFixed(1)}K`;
-    }
-    return count.toString();
+  static formatNumber(num: number): string {
+    return new Intl.NumberFormat("en-US", { notation: "compact" }).format(num);
   }
-
+  
   /**
    * Get the cache duration for a project based on the number of downloads
    * @param downloads - The number of downloads

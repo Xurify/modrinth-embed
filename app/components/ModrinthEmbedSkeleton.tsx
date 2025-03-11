@@ -48,7 +48,7 @@ export default function ModrinthEmbedSkeleton({
               Downloads:{" "}
             </span>
             <span className="font-medium text-gray-900 dark:text-white">
-              {ModrinthAPI.formatDownloads(project.downloads)}
+              {ModrinthAPI.formatNumber(project.downloads)}
             </span>
           </div>
           {latestVersion && (

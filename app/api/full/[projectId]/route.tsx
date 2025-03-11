@@ -76,7 +76,9 @@ export async function GET(
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: showPadding ? themeColors.background2 : "transparent",
+            backgroundColor: showPadding
+              ? themeColors.background2
+              : "transparent",
           }}
         >
           <div
@@ -187,7 +189,7 @@ export async function GET(
                   style={{ display: "flex", alignItems: "center", gap: "4px" }}
                 >
                   <span>Downloads:</span>
-                  <span>{ModrinthAPI.formatDownloads(project.downloads)}</span>
+                  <span>{ModrinthAPI.formatNumber(project.downloads)}</span>
                 </div>
               )}
               {showVersion && latestVersion && (
