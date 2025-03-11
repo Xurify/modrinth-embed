@@ -45,7 +45,7 @@ export default async function ModrinthBadge({
       </span>
       {showDownloads && (
         <span className="text-gray-500 dark:text-gray-400">
-          {ModrinthAPI.formatDownloads(project.downloads)}
+          {ModrinthAPI.formatNumber(project.downloads)}
         </span>
       )}
       {showVersion && latestVersion && (
