@@ -11,7 +11,7 @@ export async function GET(
   try {
     const { id } = await params;
     const members = await ModrinthAPI.fetchFromModrinth(
-      `/team/${id}/members`,
+      `/project/${id}/members`,
       z.array(TeamMemberSchema)
     );
 
