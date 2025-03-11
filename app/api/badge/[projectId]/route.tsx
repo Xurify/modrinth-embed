@@ -243,6 +243,7 @@ export async function GET(
       }
     );
   } catch (error) {
+    console.log("Error generating badge", error);
     return new Response("Project not found", { status: 404 });
   }
 }
