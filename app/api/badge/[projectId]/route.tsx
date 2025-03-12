@@ -7,28 +7,8 @@ import FullVariant from "./variants/FullVariant";
 import { CompactVariant } from "./variants/CompactVariant";
 import { join } from "path";
 import { readFile } from "fs/promises";
-import fs from "fs";
-
-//const jost400 = fs.readFileSync("./public/assets/fonts/Jost-Regular.ttf");
 
 export const runtime = "nodejs";
-
-async function loadGoogleFont(font: string, text: string) {
-  const url = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(text)}`;
-  const css = await (await fetch(url)).text();
-  const resource = css.match(
-    /src: url\((.+)\) format\('(opentype|truetype)'\)/
-  );
-
-  if (resource) {
-    const response = await fetch(resource[1]);
-    if (response.status == 200) {
-      return await response.arrayBuffer();
-    }
-  }
-
-  throw new Error("failed to load font data");
-}
 
 export async function GET(
   request: NextRequest,
@@ -191,6 +171,13 @@ export async function GET(
     );
     const jost700 = await readFile(
       join(process.cwd(), "public/assets/fonts/Jost-Bold.ttf")
+    );
+
+    const notoSans = await readFile(
+      join(process.cwd(), "public/assets/fonts/NotoSans-Regular.ttf")
+    );
+    const notoSans700 = await readFile(
+      join(process.cwd(), "public/assets/fonts/NotoSans-Bold.ttf")
     );
 
     return new ImageResponse(component, {
