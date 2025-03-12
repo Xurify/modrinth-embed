@@ -173,13 +173,6 @@ export async function GET(
       join(process.cwd(), "public/assets/fonts/Jost-Bold.ttf")
     );
 
-    const notoSans = await readFile(
-      join(process.cwd(), "public/assets/fonts/NotoSans-Regular.ttf")
-    );
-    const notoSans700 = await readFile(
-      join(process.cwd(), "public/assets/fonts/NotoSans-Bold.ttf")
-    );
-
     return new ImageResponse(component, {
       ...options,
       fonts: [
