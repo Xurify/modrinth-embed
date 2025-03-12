@@ -1,5 +1,5 @@
 import { truncate } from "@/lib/api/utils/utils";
-import { ModrinthIcon } from "./icons/ModrinthIcon";
+import { ModrinthIcon } from "../icons/ModrinthIcon";
 
 interface DefaultProps {
   iconUrl?: string;
