@@ -1,21 +1,83 @@
 # Modrinth Embed
 
-A modern Next.js application for embedding Modrinth projects anywhere on the web. This project provides multiple ways to showcase Modrinth projects in your website, from full-featured embeds to compact badges.
+A modern way to embed Modrinth projects on your website using dynamic badges. Powered by the Modrinth API and Next.js.
 
 ## Features
 
-- 🎯 Server and Client Components for maximum flexibility
-- 🎨 Modern, responsive design with dark mode support
-- 🚀 Static badge generation API
-- ⚡ Smart caching for optimal performance
-- 🌐 WCAG compliant accessibility
-- 📱 Mobile-friendly interface
+- 🎨 Three beautiful badge styles: Default, Compact, and Full
+- 🌙 Light and dark theme support
+- 📊 Customizable display options (downloads, versions, etc.)
+- ⚡ Optimized caching for fast loading
+- 🖼️ PNG image output for maximum compatibility
 
-## Installation
+## Usage
+
+### Default Badge
+
+```html
+<img 
+  src="https://modrinth-embed.vercel.app/IRm6z3S7.png" 
+  alt="Modrinth Project" 
+  width="340" 
+  height="80" 
+/>
+```
+
+### Compact Badge
+
+```html
+<img 
+  src="https://modrinth-embed.vercel.app/IRm6z3S7.png?variant=compact" 
+  alt="Modrinth Project" 
+  height="32" 
+/>
+```
+
+### Full Badge
+
+```html
+<img 
+  src="https://modrinth-embed.vercel.app/IRm6z3S7.png?variant=full" 
+  alt="Modrinth Project" 
+  width="900" 
+  height="400" 
+/>
+```
+
+## Customization Options
+
+You can customize the badge appearance using URL parameters:
+
+- `variant`: Change badge style
+  - `default` (Default badge)
+  - `compact` (Compact single-line badge)
+  - `full` (Full project showcase)
+
+- `theme`: Change color theme
+  - `dark` (Default)
+  - `light`
+
+- Display options:
+  - `showDownloads=true|false` - Show/hide download count
+  - `showVersion=true|false` - Show/hide version number
+  - `showButton=true|false` - Show/hide download button (full variant only)
+  - `showPadding=true|false` - Show/hide padding (full variant only)
+
+Example with options:
+```html
+<img 
+  src="https://modrinth-embed.vercel.app/IRm6z3S7.png?variant=full&theme=light&showDownloads=true" 
+  alt="Modrinth Project" 
+  width="900" 
+  height="400"
+/>
+```
+
+## Development
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/modrinth-embed.git
+git clone https://github.com/Xurify/modrinth-embed.git
 cd modrinth-embed
 
 # Install dependencies
@@ -25,91 +87,6 @@ npm install
 npm run dev
 ```
 
-## Usage
-
-### Server Component
-
-```tsx
-import { ModrinthEmbed } from 'modrinth-embed'
-
-export default function Page() {
-  return <ModrinthEmbed projectId="AANobbMI" />
-}
-```
-
-### Client Component
-
-```tsx
-import { ClientModrinthEmbed } from 'modrinth-embed'
-
-export default function Page() {
-  return <ClientModrinthEmbed projectId="AANobbMI" />
-}
-```
-
-### Compact Badge
-
-```tsx
-import { ModrinthBadge } from 'modrinth-embed'
-
-export default function Page() {
-  return (
-    <ModrinthBadge
-      projectId="AANobbMI"
-      showDownloads={true}
-      showVersion={true}
-    />
-  )
-}
-```
-
-### Static Badge API
-
-```html
-<img src="https://your-domain.com/api/badge/AANobbMI" alt="Modrinth Project" />
-
-<!-- With options -->
-<img
-  src="https://your-domain.com/api/badge/AANobbMI?theme=dark&style=compact"
-  alt="Modrinth Project"
-/>
-```
-
-## API Options
-
-### Badge API Parameters
-
-- `theme`: `light` (default) | `dark`
-- `style`: `default` (default) | `compact`
-- `showDownloads`: `true` (default) | `false`
-- `showVersion`: `true` (default) | `false`
-
-## Development
-
-```bash
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm run start
-
-# Run linter
-npm run lint
-```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT License - see LICENSE for details.
-
 ## Credits
 
-- Built with [Next.js](https://nextjs.org/)
-- Data from [Modrinth API](https://docs.modrinth.com/api-spec)
-- Styling with [Tailwind CSS](https://tailwindcss.com/)
+- Data from [Modrinth API](https://docs.modrinth.com/)
