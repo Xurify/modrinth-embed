@@ -90,7 +90,7 @@ export async function GET(
       },
       full: {
         width: showPadding ? 1200 : 900,
-        height: showPadding ? 600 : 400,
+        height: showPadding ? 600 : 405,
         headers,
       },
       compact: {
