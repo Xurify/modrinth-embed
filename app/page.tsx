@@ -1,6 +1,5 @@
 import ModrinthEmbed from "./components/ModrinthEmbed";
 import ClientModrinthEmbed from "./components/ClientModrinthEmbed";
-import ModrinthBadge from "./components/ModrinthBadge";
 
 export default function Home() {
   const projectIds = {
