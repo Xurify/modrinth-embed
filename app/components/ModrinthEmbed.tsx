@@ -9,8 +9,8 @@ interface ModrinthEmbedProps {
 
 export default async function ModrinthEmbed({ projectId, className }: ModrinthEmbedProps) {
   const project = await ModrinthAPI.getProject(projectId);
-  const versions = await ModrinthAPI.getVersions(projectId);
-  const latestVersion = versions[0];
+  const versions = await ModrinthAPI.getVersions(projectId) || [];
+  const latestVersion = versions[0] || null;
 
   if (!project) {
     return <ModrinthEmbedLoadingSkeleton />;
