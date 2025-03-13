@@ -18,9 +18,10 @@ export async function GET(
 
     return NextResponse.json(project, {
       headers: {
-        "Cache-Control": `public, s-maxage=${cacheDuration}, stale-while-revalidate=${
-          cacheDuration * 2
-        }`,
+        // "Cache-Control": `public, s-maxage=${cacheDuration}, stale-while-revalidate=${
+        //   cacheDuration * 2
+        // }`,
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
       },
     });
   } catch (error) {
