@@ -4,7 +4,7 @@ import { ModrinthAPI, ModrinthProjectSchema } from "@/lib/api/modrinth";
 export const runtime = "edge";
 
 export async function GET(
-  request: Request,
+  _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -14,7 +14,7 @@ export async function GET(
       ModrinthProjectSchema
     );
 
-    const cacheDuration = ModrinthAPI.getCacheDuration(project.downloads);
+    //const cacheDuration = ModrinthAPI.getCacheDuration(project.downloads);
 
     return NextResponse.json(project, {
       headers: {
