@@ -50,12 +50,19 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-medium mb-4 text-white">Default Badge</h3>
                 <div className="space-y-4">
-                  <img
-                    src={`/${projectIds.sodium}.png`}
-                    alt="Sodium"
-                    width="340"
-                    height="80"
-                  />
+                  <a 
+                    href={`https://modrinth.com/mod/${projectIds.sodium}`} 
+                    className="inline-flex"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={`/${projectIds.sodium}.png`}
+                      alt="Sodium"
+                      width="340"
+                      height="80"
+                    />
+                  </a>
                   <div className="bg-[#2D2F31] text-white p-4 rounded-lg overflow-x-auto">
                     <pre className="text-sm">
                       <code>{`<img src="https://modrinth-embed.vercel.app/AANobbMI.png" alt="Modrinth Project" width="340" height="80" />`}</code>
@@ -68,11 +75,18 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-medium mb-4 text-white">Compact Badge</h3>
                 <div className="space-y-4">
-                  <img
-                    src={`/${projectIds.sodium}.png?variant=compact`}
-                    alt="Sodium"
-                    height="32"
-                  />
+                  <a 
+                    href={`https://modrinth.com/mod/${projectIds.sodium}`} 
+                    className="inline-flex"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={`/${projectIds.sodium}.png?variant=compact`}
+                      alt="Sodium"
+                      height="32"
+                    />
+                  </a>
                   <div className="bg-[#2D2F31] text-white p-4 rounded-lg overflow-x-auto">
                     <pre className="text-sm">
                       <code>{`<img src="https://modrinth-embed.vercel.app/AANobbMI.png?variant=compact" alt="Modrinth Project" height="32" />`}</code>
@@ -85,12 +99,19 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-medium mb-4 text-white">Full Badge</h3>
                 <div className="space-y-4">
-                  <img
-                    src={`/${projectIds.sodium}.png?variant=full`}
-                    alt="Sodium"
-                    width="600"
-                    height="260"
-                  />
+                  <a 
+                    href={`https://modrinth.com/mod/${projectIds.sodium}`} 
+                    className="inline-flex"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={`/${projectIds.sodium}.png?variant=full`}
+                      alt="Sodium"
+                      width="600"
+                      height="260"
+                    />
+                  </a>
                   <div className="bg-[#2D2F31] text-white p-4 rounded-lg overflow-x-auto">
                     <pre className="text-sm">
                       <code>{`<img src="https://modrinth-embed.vercel.app/AANobbMI.png?variant=full" alt="Modrinth Project" width="900" height="400" />`}</code>
@@ -101,7 +122,7 @@ export default function Home() {
 
               <div className="mt-8 bg-[#2D2F31] text-white p-4 rounded-lg overflow-x-auto">
                 <pre className="text-sm">
-                  <code>{`<!-- All available options -->
+                  <code>{`<!-- Basic usage -->
 <img 
   src="https://modrinth-embed.vercel.app/AANobbMI.png"
   alt="Modrinth Project"
@@ -115,7 +136,8 @@ export default function Home() {
 ?showDownloads=true|false      # Show/hide download count
 ?showVersion=true|false        # Show/hide version number
 ?showButton=true|false         # Show/hide download button (full variant only)
-?showPadding=true|false        # Show/hide padding (full variant only)`}</code>
+?showPadding=true|false        # Show/hide padding (full variant only)
+`}</code>
                 </pre>
               </div>
             </div>
