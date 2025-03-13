@@ -24,7 +24,7 @@ export default function Home() {
         <p className="text-gray-400 mb-8 max-w-3xl">
           A modern way to embed Modrinth projects on your website, powered by the{" "}
           <a 
-            href="https://docs.modrinth.com/"
+            href="https://docs.modrinth.com/api"
             target="_blank"
             rel="noopener noreferrer"
             className="text-emerald-500 hover:underline"
