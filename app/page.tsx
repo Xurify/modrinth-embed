@@ -40,96 +40,84 @@ export default function Home() {
         <div className="space-y-12">
           <section>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              Project Badge
+              Project Badges
             </h2>
             <p className="text-gray-400 mb-6">
-              A compact badge that shows key project information in a single
-              line. Perfect for READMEs and project documentation.
+              Choose from three different badge styles: Default, Compact, and Full. Each style can be customized with various options.
             </p>
 
             <div className="space-y-8">
+              {/* Default Variant */}
               <div>
-                <div className="grid gap-8 md:grid-cols-2">
-                  <div>
-                    <h4 className="text-base font-medium mb-2 text-white flex items-center gap-2">
-                      <svg
-                        className="w-5 h-5 text-emerald-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                      React Component
-                    </h4>
-                    <div className="space-y-4 space-x-4">
-                      <ModrinthBadge projectId={projectIds.sodium} />
-                      <ModrinthBadge projectId={projectIds.iris} />
-                      <ModrinthBadge projectId={projectIds.elytraAssistant} />
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-base font-medium mb-2 text-white flex items-center gap-2">
-                      <svg
-                        className="w-5 h-5 text-emerald-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 16l4 4m0 0l4-4m-4 4V4"
-                        />
-                      </svg>
-                      Static Image
-                    </h4>
-                    <div className="flex flex-col space-y-4">
-                      <img
-                        src={`/api/badge/${projectIds.sodium}`}
-                        alt="Sodium"
-                        width="250"
-                        height="70"
-                      />
-                      <img
-                        src={`/api/badge/${projectIds.iris}`}
-                        alt="Iris"
-                        width="250"
-                        height="70"
-                      />
-                      <img
-                        src={`/api/badge/${projectIds.elytraAssistant}`}
-                        alt="elytraAssistant"
-                        width="250"
-                        height="70"
-                      />
-                    </div>
+                <h3 className="text-xl font-medium mb-4 text-white">Default Badge</h3>
+                <div className="space-y-4">
+                  <img
+                    src={`/${projectIds.sodium}.png`}
+                    alt="Sodium"
+                    width="340"
+                    height="80"
+                  />
+                  <div className="bg-[#2D2F31] text-white p-4 rounded-lg overflow-x-auto">
+                    <pre className="text-sm">
+                      <code>{`<img src="https://modrinth-embed.vercel.app/AANobbMI.png" alt="Modrinth Project" width="340" height="80" />`}</code>
+                    </pre>
                   </div>
                 </div>
+              </div>
 
-                <div className="mt-8 bg-[#2D2F31] text-white p-4 rounded-lg overflow-x-auto">
-                  <pre className="text-sm">
-                    <code>{`// React Component
-import ModrinthBadge from './components/ModrinthBadge';
+              {/* Compact Variant */}
+              <div>
+                <h3 className="text-xl font-medium mb-4 text-white">Compact Badge</h3>
+                <div className="space-y-4">
+                  <img
+                    src={`/${projectIds.sodium}.png?variant=compact`}
+                    alt="Sodium"
+                    height="32"
+                  />
+                  <div className="bg-[#2D2F31] text-white p-4 rounded-lg overflow-x-auto">
+                    <pre className="text-sm">
+                      <code>{`<img src="https://modrinth-embed.vercel.app/AANobbMI.png?variant=compact" alt="Modrinth Project" height="32" />`}</code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
 
-<ModrinthBadge projectId="AANobbMI" />
+              {/* Full Variant */}
+              <div>
+                <h3 className="text-xl font-medium mb-4 text-white">Full Badge</h3>
+                <div className="space-y-4">
+                  <img
+                    src={`/${projectIds.sodium}.png?variant=full`}
+                    alt="Sodium"
+                    width="600"
+                    height="260"
+                  />
+                  <div className="bg-[#2D2F31] text-white p-4 rounded-lg overflow-x-auto">
+                    <pre className="text-sm">
+                      <code>{`<img src="https://modrinth-embed.vercel.app/AANobbMI.png?variant=full" alt="Modrinth Project" width="900" height="400" />`}</code>
+                    </pre>
+                  </div>
+                </div>
+              </div>
 
-// Static Image
+              <div className="mt-8 bg-[#2D2F31] text-white p-4 rounded-lg overflow-x-auto">
+                <pre className="text-sm">
+                  <code>{`<!-- All available options -->
 <img 
-  src="https://modrinth-embed.vercel.app/api/badge/AANobbMI"
+  src="https://modrinth-embed.vercel.app/AANobbMI.png"
   alt="Modrinth Project"
-  width="250"
-  height="70"
-/>`}</code>
-                  </pre>
-                </div>
+  width="340"
+  height="80"
+/>
+
+<!-- Optional URL parameters -->
+?variant=default|compact|full    # Change badge style
+?theme=dark|light               # Change color theme
+?showDownloads=true|false      # Show/hide download count
+?showVersion=true|false        # Show/hide version number
+?showButton=true|false         # Show/hide download button (full variant only)
+?showPadding=true|false        # Show/hide padding (full variant only)`}</code>
+                </pre>
               </div>
             </div>
           </section>
