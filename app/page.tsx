@@ -124,36 +124,6 @@ export default function Home() {
 
           <section>
             <h2 className="text-2xl font-semibold mb-2 text-white">
-              Component Sizes
-            </h2>
-            <p className="text-gray-400 mb-6">
-              The component is responsive by default and adapts to its container width
-              while maintaining a consistent look and feel.
-            </p>
-
-            <div className="grid gap-8 md:grid-cols-2">
-              <div>
-                <h3 className="text-xl font-medium mb-4 text-white">
-                  Default Size
-                </h3>
-                <div className="max-w-2xl">
-                  <ModrinthEmbed projectId={projectIds.sodium} />
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-medium mb-4 text-white">
-                  Constrained Width
-                </h3>
-                <div className="max-w-sm">
-                  <ModrinthEmbed projectId={projectIds.sodium} />
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-semibold mb-2 text-white">
               Server vs Client Components
             </h2>
             <p className="text-gray-400 mb-6">
