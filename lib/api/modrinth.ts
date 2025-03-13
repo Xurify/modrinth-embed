@@ -227,9 +227,9 @@ export class ModrinthAPI {
   ): Promise<T> {
     const MODRINTH_API_BASE = "https://api.modrinth.com/v2";
     const response = await fetch(`${MODRINTH_API_BASE}${endpoint}`, {
-      // headers: {
-      //   "User-Agent": "modrinth-embed/1.0.0",
-      // },
+      headers: {
+        "User-Agent": "xurify/modrinth-embed/1.0.0 (contact@xurify.com)",
+      },
     });
 
     if (!response.ok) {
