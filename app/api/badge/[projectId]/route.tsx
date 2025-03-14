@@ -102,6 +102,8 @@ export async function GET(
 
     const options = OPTIONS[variant];
 
+    console.log("options45", options, variant);
+
     const colors = {
       light: {
         background: "#ffffff",
@@ -162,9 +164,15 @@ export async function GET(
               width={generateCompactDimensions(data).width}
             />
           );
+        default:
+          return null;
       }
     };
     const component = getVariant();
+
+    if (!component) {
+      return new Response("Invalid variant", { status: 400 });
+    }
 
     const jost400 = await readFile(
       join(process.cwd(), "public/assets/fonts/Jost-Regular.ttf")
@@ -195,6 +203,6 @@ export async function GET(
     });
   } catch (error) {
     console.log("Error generating badge", error);
-    return new Response("Project not found", { status: 404 });
+    return new Response(`Failed to generate badge: ${error}`, { status: 500 });
   }
 }
