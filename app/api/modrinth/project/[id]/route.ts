@@ -21,7 +21,7 @@ export async function GET(
         // "Cache-Control": `public, s-maxage=${cacheDuration}, stale-while-revalidate=${
         //   cacheDuration * 2
         // }`,
-        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
+        "Cache-Control": `public, max-age=3600, s-maxage=3600, stale-while-revalidate=7200`,
       },
     });
   } catch (error) {
