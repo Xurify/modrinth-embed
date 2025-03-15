@@ -60,10 +60,6 @@ export async function GET(
     );
     const cacheDuration = ModrinthAPI.getCacheDuration(parseInt(downloads, 10));
 
-    const headers = {
-      "Cache-Control": `public, immutable, no-transform, max-age=${cacheDuration}`,
-    };
-
     const generateCompactDimensions = (project: ModrinthProject) => {
       const height = 32;
       const fontSize = 14;
@@ -86,23 +82,18 @@ export async function GET(
       default: {
         width: 680,
         height: 160,
-        headers,
       },
       full: {
         width: showPadding ? 1200 : 900,
         height: showPadding ? 600 : 405,
-        headers,
       },
       compact: {
         width: generateCompactDimensions(data).width,
         height: generateCompactDimensions(data).height,
-        headers,
       },
     };
 
     const options = OPTIONS[variant];
-
-    console.log("options45", options, variant);
 
     const colors = {
       light: {
@@ -198,7 +189,7 @@ export async function GET(
         },
       ],
       headers: {
-        "Cache-Control": `public, immutable, no-transform, max-age=${cacheDuration}`,
+        "Cache-Control": `public, immutable, no-transform, max-age=${cacheDuration}, stale-while-revalidate=604800`,
       },
     });
   } catch (error) {
