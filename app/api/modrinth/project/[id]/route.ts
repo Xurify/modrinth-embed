@@ -9,6 +9,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
+
     const project = await ModrinthAPI.fetchFromModrinth(
       `/project/${id}`,
       ModrinthProjectSchema
@@ -28,7 +29,12 @@ export async function GET(
     console.error("Error fetching project:", error);
     return NextResponse.json(
       { error: "Failed to fetch project" },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          "Cache-Control": `public, max-age=300, s-maxage=300`,
+        }
+      }
     );
   }
 }

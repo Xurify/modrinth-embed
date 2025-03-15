@@ -16,9 +16,9 @@ export async function GET(
 ) {
   const { searchParams } = new URL(request.url);
   const { projectId } = await params;
+  const etag = `"${projectId}-${searchParams.toString()}"`;
 
   try {
-    const etag = `"${projectId}-${searchParams.toString()}"`;
     if (request.headers.get('if-none-match') === etag) {
       return new Response(null, {
         status: 304,
@@ -30,7 +30,13 @@ export async function GET(
 
     const data = await ModrinthAPI.getProject(projectId);
     if (!data) {
-      return new Response("Project not found", { status: 404 });
+      return new Response("Project not found", { 
+        status: 404,
+        headers: {
+          "Cache-Control": "public, max-age=300, s-maxage=300", // Cache 404s for 5 minutes
+          "ETag": etag,
+        }
+      });
     }
 
     const variant =
@@ -206,6 +212,12 @@ export async function GET(
     });
   } catch (error) {
     console.error("Error generating badge", error);
-    return new Response(`Failed to generate badge: ${error}`, { status: 500 });
+    return new Response(`Failed to generate badge: ${error}`, { 
+      status: 500,
+      headers: {
+        "Cache-Control": "public, max-age=300, s-maxage=300", // Cache errors for 5 minutes
+        "ETag": etag,
+      }
+    });
   }
 }
