@@ -114,10 +114,14 @@ export class ModrinthAPI {
       const response = await this.fetch(url);
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch project: ${response.statusText}`);
+        console.error(`Failed to fetch project: ${response.statusText}`);
+        return null;
       }
 
       const data = await response.json();
+      if (!data) {
+        return null;
+      }
       return ModrinthProjectSchema.parse(data);
     } catch (error) {
       console.error("Error fetching project:", error);
@@ -139,7 +143,8 @@ export class ModrinthAPI {
       const response = await this.fetch(url);
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch team members: ${response.statusText}`);
+        console.error(`Failed to fetch team members: ${response.statusText}`);
+        return [];
       }
 
       const data = await response.json();
@@ -164,7 +169,8 @@ export class ModrinthAPI {
       const response = await this.fetch(url);
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch versions: ${response.statusText}`);
+        console.error(`Failed to fetch versions: ${response.statusText}`);
+        return [];
       }
 
       const data = await response.json();
@@ -224,7 +230,7 @@ export class ModrinthAPI {
   static async fetchFromModrinth<T>(
     endpoint: string,
     schema: z.ZodType<T>
-  ): Promise<T> {
+  ): Promise<T | null> {
     const MODRINTH_API_BASE = "https://api.modrinth.com/v2";
     const response = await fetch(`${MODRINTH_API_BASE}${endpoint}`, {
       headers: {
@@ -233,7 +239,8 @@ export class ModrinthAPI {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch from Modrinth: ${response.statusText}`);
+      console.error(`Failed to fetch from Modrinth: ${response.statusText}`);
+      return null;
     }
 
     const data = await response.json();
