@@ -193,7 +193,7 @@ export async function GET(
       },
     });
   } catch (error) {
-    console.log("Error generating badge", error);
+    console.error("Error generating badge", error);
     return new Response(`Failed to generate badge: ${error}`, { status: 500 });
   }
 }

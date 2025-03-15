@@ -1,4 +1,4 @@
-import { truncate } from "@/lib/api/utils/utils";
+import { truncate } from "@/lib/utils";
 import { ModrinthIcon } from "../icons/ModrinthIcon";
 
 interface DefaultProps {

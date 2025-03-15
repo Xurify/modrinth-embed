@@ -1,5 +1,5 @@
 import { ModrinthAPI, ModrinthProject } from "@/lib/api/modrinth";
-import { truncate } from "@/lib/api/utils/utils";
+import { truncate } from "@/lib/utils";
 
 interface FullVariantProps {
   iconUrl?: string;
