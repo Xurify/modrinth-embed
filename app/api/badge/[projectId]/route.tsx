@@ -18,6 +18,16 @@ export async function GET(
   const { projectId } = await params;
 
   try {
+    const etag = `"${projectId}-${searchParams.toString()}"`;
+    if (request.headers.get('if-none-match') === etag) {
+      return new Response(null, {
+        status: 304,
+        headers: {
+          'ETag': etag,
+        },
+      });
+    }
+
     const data = await ModrinthAPI.getProject(projectId);
     if (!data) {
       return new Response("Project not found", { status: 404 });
@@ -190,6 +200,8 @@ export async function GET(
       ],
       headers: {
         "Cache-Control": `public, immutable, no-transform, max-age=${cacheDuration}, stale-while-revalidate=604800`,
+        "ETag": etag,
+        "Vary": "Accept, Accept-Encoding",
       },
     });
   } catch (error) {
