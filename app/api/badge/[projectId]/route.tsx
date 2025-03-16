@@ -1,12 +1,12 @@
 import { ImageResponse } from "next/og";
 import { ImageResponseOptions, NextRequest } from "next/server";
-import { ModrinthAPI, ModrinthProject } from "../../../../lib/api/modrinth";
+import { join } from "path";
+import { readFile } from "fs/promises";
 import sharp from "sharp";
+import { ModrinthAPI, ModrinthProject } from "../../../../lib/api/modrinth";
 import DefaultVariant from "./variants/DefaultVariant";
 import FullVariant from "./variants/FullVariant";
 import { CompactVariant } from "./variants/CompactVariant";
-import { join } from "path";
-import { readFile } from "fs/promises";
 
 export const runtime = "nodejs";
 
