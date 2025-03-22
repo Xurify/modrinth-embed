@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { z } from "zod";
 import { ModrinthAPI, TeamMemberSchema } from "@/lib/api/modrinth";
 
@@ -15,14 +14,14 @@ export async function GET(
       z.array(TeamMemberSchema)
     );
 
-    return NextResponse.json(members, {
+    return Response.json(members, {
       headers: {
         "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
       },
     });
   } catch (error) {
     console.error("Error fetching team members:", error);
-    return NextResponse.json(
+    return Response.json(
       { error: "Failed to fetch team members" },
       { status: 500 }
     );
