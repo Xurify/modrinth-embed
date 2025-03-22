@@ -13,7 +13,7 @@ export default function Home() {
       <div className="container mx-auto">
         <h1 className="text-3xl font-bold mb-4 text-white flex items-center gap-2">
           <svg
-            className="w-8 h-8 text-emerald-500"
+            className="w-8 h-8 text-brand"
             viewBox="0 0 24 24"
             fill="currentColor"
           >
