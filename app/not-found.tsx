@@ -12,7 +12,7 @@ export default function NotFound() {
 
         <Link 
           href="/"
-          className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white px-6 py-3 rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 bg-brand hover:bg-brand/80 text-black font-semibold px-6 py-3 rounded-lg transition-colors"
         >
           <svg
             className="w-5 h-5"

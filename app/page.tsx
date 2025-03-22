@@ -27,7 +27,7 @@ export default function Home() {
             href="https://docs.modrinth.com/api"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-emerald-500 hover:underline"
+            className="text-brand hover:underline"
           >
             Modrinth API
           </a>
@@ -156,7 +156,7 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-medium mb-4 text-white flex items-center gap-2">
                   <svg
-                    className="w-5 h-5 text-emerald-500"
+                    className="w-5 h-5 text-brand"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -178,7 +178,7 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-medium mb-4 text-white flex items-center gap-2">
                   <svg
-                    className="w-5 h-5 text-emerald-400"
+                    className="w-5 h-5 text-brand"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
