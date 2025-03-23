@@ -196,6 +196,8 @@ export class ModrinthAPI {
    * @returns The cache duration
    */
   static getCacheDuration(downloads: number): number {
+    // TODO: Testing - will remove this later
+    return 3600;
     if (downloads >= 1000000) {
       return 604800; // 1 week
     } else if (downloads >= 100000) {
