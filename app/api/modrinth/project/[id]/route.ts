@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { ModrinthAPI, ModrinthProjectSchema } from "@/lib/api/modrinth";
 
 export const runtime = "nodejs";
