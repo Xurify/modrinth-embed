@@ -3,11 +3,11 @@ import { ImageResponseOptions, NextRequest } from "next/server";
 import { join } from "path";
 import { readFile } from "fs/promises";
 import sharp from "sharp";
+import crypto from "crypto";
 import { ModrinthAPI, ModrinthProject } from "../../../../lib/api/modrinth";
 import DefaultVariant from "./variants/DefaultVariant";
 import FullVariant from "./variants/FullVariant";
 import { CompactVariant } from "./variants/CompactVariant";
-import crypto from "crypto";
 
 export const runtime = "nodejs";
 
@@ -101,7 +101,7 @@ export async function GET(
     const formattedDownloads = ModrinthAPI.formatNumber(
       parseInt(downloads, 10)
     );
-    const cacheDuration = ModrinthAPI.getCacheDuration(parseInt(downloads, 10));
+    //const cacheDuration = ModrinthAPI.getCacheDuration(parseInt(downloads, 10));
 
     const generateCompactDimensions = (project: ModrinthProject) => {
       const height = 32;
