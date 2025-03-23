@@ -53,7 +53,7 @@ export async function GET(
     }))
     .digest('hex');
 
-  const etag = `"${projectId}-${contentHash}"`;
+  const etag = `${projectId}-${contentHash}`;
 
   try {
     if (request.headers.get('if-none-match') === etag) {
