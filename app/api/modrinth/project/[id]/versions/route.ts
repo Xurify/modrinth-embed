@@ -9,7 +9,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const versions = await ModrinthAPI.fetchFromModrinth(
+    const { data: versions, headers } = await ModrinthAPI.fetchFromModrinth(
       `/project/${id}/version`,
       z.array(ModrinthVersionSchema)
     );
@@ -17,6 +17,9 @@ export async function GET(
     return Response.json(versions, {
       headers: {
         "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
+        ...(headers.limit && { "X-Ratelimit-Limit": headers.limit }),
+        ...(headers.remaining && { "X-Ratelimit-Remaining": headers.remaining }),
+        ...(headers.reset && { "X-Ratelimit-Reset": headers.reset }),
       },
     });
   } catch (error) {

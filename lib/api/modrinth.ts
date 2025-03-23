@@ -189,7 +189,7 @@ export class ModrinthAPI {
   static formatNumber(num: number): string {
     return new Intl.NumberFormat("en-US", { notation: "compact" }).format(num);
   }
-  
+
   /**
    * Get the cache duration for a project based on the number of downloads
    * @param downloads - The number of downloads
@@ -229,24 +229,51 @@ export class ModrinthAPI {
    * @param schema - The schema to parse the data with
    * @returns The data
    */
-  static async fetchFromModrinth<T>(
+  static async fetchFromModrinth<T extends z.ZodType>(
     endpoint: string,
-    schema: z.ZodType<T>
-  ): Promise<T | null> {
-    const MODRINTH_API_BASE = "https://api.modrinth.com/v2";
-    const response = await fetch(`${MODRINTH_API_BASE}${endpoint}`, {
-      headers: {
-        "User-Agent": "xurify/modrinth-embed/1.0.0 (contact@xurify.com)",
-      },
-    });
+    schema: T
+  ): Promise<{
+    data: z.infer<T> | null;
+    headers: {
+      limit: string | null;
+      remaining: string | null;
+      reset: string | null;
+    };
+  }> {
+    try {
+      const url = new URL(
+        `https://api.modrinth.com/v2${endpoint}`,
+        process.env.NEXT_PUBLIC_APP_URL
+      );
+      const response = await this.fetch(url, {
+        headers: {
+          "User-Agent": "xurify/modrinth-embed/1.0.0 (contact@xurify.com)",
+        },
+      });
 
-    if (!response.ok) {
-      console.error(`Failed to fetch from Modrinth: ${response.statusText}`);
-      return null;
+      const headers = {
+        limit: response.headers.get("X-Ratelimit-Limit"),
+        remaining: response.headers.get("X-Ratelimit-Remaining"),
+        reset: response.headers.get("X-Ratelimit-Reset"),
+      };
+
+      if (!response.ok) {
+        console.warn(`Failed to fetch from Modrinth: ${response.statusText}`, {
+          ...headers,
+          endpoint,
+        });
+        return { data: null, headers };
+      }
+
+      const data = await response.json();
+      return { data: schema.parse(data), headers };
+    } catch (error) {
+      console.error("Error fetching from Modrinth:", error);
+      return {
+        data: null,
+        headers: { limit: null, remaining: null, reset: null },
+      };
     }
-
-    const data = await response.json();
-    return schema.parse(data);
   }
 
   private static fetch(
