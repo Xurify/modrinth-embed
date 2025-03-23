@@ -7,6 +7,7 @@ import { ModrinthAPI, ModrinthProject } from "../../../../lib/api/modrinth";
 import DefaultVariant from "./variants/DefaultVariant";
 import FullVariant from "./variants/FullVariant";
 import { CompactVariant } from "./variants/CompactVariant";
+import crypto from "crypto";
 
 export const runtime = "nodejs";
 
@@ -16,7 +17,43 @@ export async function GET(
 ) {
   const { searchParams } = new URL(request.url);
   const { projectId } = await params;
-  const etag = `"${projectId}-${searchParams.toString()}"`;
+  const data = await ModrinthAPI.getProject(projectId);
+
+  const validParams = new URLSearchParams();
+  const variant = searchParams.get("variant") as "default" | "full" | "compact" || "default";
+  const theme = searchParams.get("theme") as "dark" | "light" || "dark";
+  const showDownloads = searchParams.get("showDownloads") !== "false";
+  const showVersion = searchParams.get("showVersion") !== "false";
+  const showButton = searchParams.get("showButton") !== "false";
+  const showPadding = searchParams.get("showPadding") === "true";
+
+  validParams.set("variant", variant);
+  validParams.set("theme", theme);
+  validParams.set("showDownloads", showDownloads.toString());
+  validParams.set("showVersion", showVersion.toString());
+  validParams.set("showButton", showButton.toString());
+  validParams.set("showPadding", showPadding.toString());
+
+  const contentHash = crypto
+    .createHash('md5')
+    .update(JSON.stringify({
+      project: {
+        downloads: data?.downloads,
+        title: data?.title,
+        icon: data?.icon_url,
+      },
+      params: {
+        variant,
+        theme,
+        showDownloads,
+        showVersion,
+        showButton,
+        showPadding,
+      }
+    }))
+    .digest('hex');
+
+  const etag = `"${projectId}-${contentHash}"`;
 
   try {
     if (request.headers.get('if-none-match') === etag) {
@@ -28,7 +65,6 @@ export async function GET(
       });
     }
 
-    const data = await ModrinthAPI.getProject(projectId);
     if (!data) {
       return new Response("Project not found", { 
         status: 404,
@@ -38,15 +74,6 @@ export async function GET(
         }
       });
     }
-
-    const variant =
-      (searchParams.get("variant") as "default" | "full" | "compact") ||
-      "default";
-    const theme = (searchParams.get("theme") as "dark" | "light") || "dark";
-    const showDownloads = searchParams.get("showDownloads") !== "false";
-    const showVersion = searchParams.get("showVersion") !== "false";
-    const showButton = searchParams.get("showButton") !== "false";
-    const showPadding = searchParams.get("showPadding") === "true";
 
     const versions = showVersion
       ? await ModrinthAPI.getVersions(projectId)
