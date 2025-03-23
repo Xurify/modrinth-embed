@@ -2,8 +2,6 @@ import { z } from "zod";
 import { ModrinthAPI, ModrinthVersionSchema } from "@/lib/api/modrinth";
 
 export const runtime = "edge";
-export const dynamic = 'force-dynamic';
-export const revalidate = 3600;
 
 export async function GET(
   request: Request,

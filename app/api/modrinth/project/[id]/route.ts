@@ -2,8 +2,6 @@ import { z } from "zod";
 import { ModrinthAPI, ModrinthProjectSchema } from "@/lib/api/modrinth";
 
 export const runtime = "edge";
-export const dynamic = 'force-dynamic';
-export const revalidate = 3600;
 
 export async function GET(
   _request: Request,
@@ -17,13 +15,8 @@ export async function GET(
       ModrinthProjectSchema
     );
 
-    //const cacheDuration = ModrinthAPI.getCacheDuration(project.downloads);
-
     return Response.json(project, {
       headers: {
-        // "Cache-Control": `public, s-maxage=${cacheDuration}, stale-while-revalidate=${
-        //   cacheDuration * 2
-        // }`,
         "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
       },
     });
@@ -34,7 +27,7 @@ export async function GET(
       { 
         status: 500,
         headers: {
-          "Cache-Control": `public, max-age=300, s-maxage=300`,
+          "Cache-Control": "public, max-age=300, s-maxage=300",
         }
       }
     );
