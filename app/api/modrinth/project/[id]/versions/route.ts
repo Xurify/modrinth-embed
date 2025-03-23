@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ModrinthAPI, ModrinthVersionSchema } from "@/lib/api/modrinth";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export async function GET(
   request: Request,
