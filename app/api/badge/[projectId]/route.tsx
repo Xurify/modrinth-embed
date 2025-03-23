@@ -69,7 +69,7 @@ export async function GET(
       return new Response("Project not found", { 
         status: 404,
         headers: {
-          "Cache-Control": "public, max-age=300, s-maxage=300", // Cache 404s for 5 minutes
+          "Cache-Control": "public, max-age=300, s-maxage=300",
           "ETag": etag,
         }
       });
@@ -232,7 +232,7 @@ export async function GET(
         },
       ],
       headers: {
-        "Cache-Control": `public, immutable, no-transform, max-age=${cacheDuration}, stale-while-revalidate=604800`,
+        "Cache-Control": `public, immutable, no-transform, max-age=7200, stale-while-revalidate=604800`,
         "ETag": etag,
         "Vary": "Accept, Accept-Encoding",
       },
