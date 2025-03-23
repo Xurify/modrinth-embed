@@ -2,6 +2,8 @@ import { z } from "zod";
 import { ModrinthAPI, ModrinthVersionSchema } from "@/lib/api/modrinth";
 
 export const runtime = "edge";
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 export async function GET(
   request: Request,
@@ -23,7 +25,12 @@ export async function GET(
     console.error("Error fetching versions:", error);
     return Response.json(
       { error: "Failed to fetch versions" },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          "Cache-Control": "public, max-age=300, s-maxage=300",
+        }
+      }
     );
   }
 }

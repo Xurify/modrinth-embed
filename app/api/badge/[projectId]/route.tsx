@@ -242,7 +242,7 @@ export async function GET(
     return new Response(`Failed to generate badge: ${error}`, { 
       status: 500,
       headers: {
-        "Cache-Control": "public, max-age=300, s-maxage=300", // Cache errors for 5 minutes
+        "Cache-Control": "public, max-age=300, s-maxage=300",
         "ETag": etag,
       }
     });
