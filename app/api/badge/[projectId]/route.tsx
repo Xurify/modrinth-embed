@@ -232,7 +232,7 @@ export async function GET(
         },
       ],
       headers: {
-        "Cache-Control": `public, immutable, no-transform, max-age=7200, stale-while-revalidate=604800`,
+        "Cache-Control": `public, max-age=3600, stale-while-revalidate=7200`,
         "ETag": etag,
         "Vary": "Accept, Accept-Encoding",
       },
