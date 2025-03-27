@@ -77,3 +77,5 @@ export const CompactVariant = ({
     </div>
   );
 };
+
+export default CompactVariant;

@@ -7,7 +7,7 @@ import crypto from "crypto";
 import { ModrinthAPI, ModrinthProject } from "../../../../lib/api/modrinth";
 import DefaultVariant from "./variants/DefaultVariant";
 import FullVariant from "./variants/FullVariant";
-import { CompactVariant } from "./variants/CompactVariant";
+import CompactVariant from "./variants/CompactVariant";
 
 export const runtime = "nodejs";
 
