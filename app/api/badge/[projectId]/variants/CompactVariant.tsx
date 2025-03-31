@@ -1,4 +1,5 @@
 import { ModrinthAPI, ModrinthProject } from "@/lib/api/modrinth";
+import { truncate } from "@/lib/utils";
 
 interface CompactVariantProps {
   iconUrl?: string;
@@ -62,7 +63,7 @@ export const CompactVariant = ({
           fontWeight: 500,
         }}
       >
-        <span>{project.title}</span>
+         <span>{truncate(project.title, 20)}</span>
         {showDownloads && (
           <span style={{ color: themeColors.secondaryText }}>
             {ModrinthAPI.formatNumber(project.downloads)}

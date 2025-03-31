@@ -1,13 +1,13 @@
 import ModrinthEmbed from "./components/ModrinthEmbed";
 import ClientModrinthEmbed from "./components/ClientModrinthEmbed";
 
-export default function Home() {
-  const projectIds = {
-    sodium: "AANobbMI",
-    iris: "YL57xq9U",
-    elytraAssistant: "IRm6z3S7",
-  };
+const projectIds = {
+  sodium: "AANobbMI",
+  iris: "YL57xq9U",
+  elytraAssistant: "IRm6z3S7",
+};
 
+export default function Home() {
   return (
     <main className="min-h-screen bg-[#1B1D1F] p-4 pb-16">
       <div className="container mx-auto">
