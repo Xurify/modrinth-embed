@@ -283,10 +283,7 @@ export class ModrinthAPI {
     return fetch(url, {
       ...options,
       next: {
-        revalidate: 3600,
-      },
-      headers: {
-        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
+        revalidate: 86400,
       },
     });
   }
