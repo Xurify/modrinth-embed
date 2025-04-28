@@ -7,6 +7,9 @@ const projectIds = {
   elytraAssistant: "IRm6z3S7",
 };
 
+export const revalidate = 86400 * 7;
+export const dynamic = 'force-static';
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#1B1D1F] p-4 pb-16">
