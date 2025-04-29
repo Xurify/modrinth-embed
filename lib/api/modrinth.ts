@@ -285,6 +285,7 @@ export class ModrinthAPI {
       next: {
         revalidate: 86400,
       },
+      cache: 'force-cache',
     });
   }
 }

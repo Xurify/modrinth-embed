@@ -146,7 +146,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section>
+          {/* <section>
             <h2 className="text-2xl font-semibold mb-2 text-white">
               Server vs Client Components
             </h2>
@@ -200,7 +200,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </section>
+          </section> */}
         </div>
       </div>
     </main>
