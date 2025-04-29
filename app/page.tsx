@@ -1,5 +1,3 @@
-import Favicon from "./favicon.svg";
-
 const projectIds = {
   sodium: "AANobbMI",
   iris: "YL57xq9U",
