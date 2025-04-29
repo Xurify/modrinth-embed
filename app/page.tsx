@@ -4,7 +4,7 @@ const projectIds = {
   elytraAssistant: "IRm6z3S7",
 };
 
-export const revalidate = 86400 * 7;
+export const revalidate = 604800;
 export const dynamic = "force-static";
 
 export default function Home() {
