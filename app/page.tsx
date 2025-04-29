@@ -1,6 +1,3 @@
-import ModrinthEmbed from "./components/ModrinthEmbed";
-import ClientModrinthEmbed from "./components/ClientModrinthEmbed";
-
 const projectIds = {
   sodium: "AANobbMI",
   iris: "YL57xq9U",
@@ -8,7 +5,7 @@ const projectIds = {
 };
 
 export const revalidate = 86400 * 7;
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 export default function Home() {
   return (
@@ -25,8 +22,9 @@ export default function Home() {
           Modrinth Embed
         </h1>
         <p className="text-gray-400 mb-8 max-w-3xl">
-          A modern way to embed Modrinth projects on your website, powered by the{" "}
-          <a 
+          A modern way to embed Modrinth projects on your website, powered by
+          the{" "}
+          <a
             href="https://docs.modrinth.com/api"
             target="_blank"
             rel="noopener noreferrer"
@@ -34,9 +32,9 @@ export default function Home() {
           >
             Modrinth API
           </a>
-          .{" "}
-          <br />
-          Choose between server and client components, or use the compact badge format.
+          . <br />
+          Choose between server and client components, or use the compact badge
+          format.
         </p>
 
         <div className="space-y-12">
@@ -45,16 +43,19 @@ export default function Home() {
               Project Badges
             </h2>
             <p className="text-gray-400 mb-6">
-              Choose from three different badge styles: Default, Compact, and Full. Each style can be customized with various options.
+              Choose from three different badge styles: Default, Compact, and
+              Full. Each style can be customized with various options.
             </p>
 
             <div className="space-y-8">
               {/* Default Variant */}
               <div>
-                <h3 className="text-xl font-medium mb-4 text-white">Default Badge</h3>
+                <h3 className="text-xl font-medium mb-4 text-white">
+                  Default Badge
+                </h3>
                 <div className="space-y-4">
-                  <a 
-                    href={`https://modrinth.com/mod/${projectIds.sodium}`} 
+                  <a
+                    href={`https://modrinth.com/mod/${projectIds.sodium}`}
                     className="inline-flex"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -76,10 +77,12 @@ export default function Home() {
 
               {/* Compact Variant */}
               <div>
-                <h3 className="text-xl font-medium mb-4 text-white">Compact Badge</h3>
+                <h3 className="text-xl font-medium mb-4 text-white">
+                  Compact Badge
+                </h3>
                 <div className="space-y-4">
-                  <a 
-                    href={`https://modrinth.com/mod/${projectIds.sodium}`} 
+                  <a
+                    href={`https://modrinth.com/mod/${projectIds.sodium}`}
                     className="inline-flex"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -100,10 +103,12 @@ export default function Home() {
 
               {/* Full Variant */}
               <div>
-                <h3 className="text-xl font-medium mb-4 text-white">Full Badge</h3>
+                <h3 className="text-xl font-medium mb-4 text-white">
+                  Full Badge
+                </h3>
                 <div className="space-y-4">
-                  <a 
-                    href={`https://modrinth.com/mod/${projectIds.sodium}`} 
+                  <a
+                    href={`https://modrinth.com/mod/${projectIds.sodium}`}
                     className="inline-flex"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -145,62 +150,6 @@ export default function Home() {
               </div>
             </div>
           </section>
-
-          {/* <section>
-            <h2 className="text-2xl font-semibold mb-2 text-white">
-              Server vs Client Components
-            </h2>
-            <p className="text-gray-400 mb-6">
-              Choose between server components (better for SEO and initial load) or client
-              components (better for dynamic updates and loading states).
-            </p>
-
-            <div className="grid gap-8 md:grid-cols-2">
-              <div>
-                <h3 className="text-xl font-medium mb-4 text-white flex items-center gap-2">
-                  <svg
-                    className="w-5 h-5 text-brand"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  Server Component
-                </h3>
-                <div className="max-w-2xl">
-                  <ModrinthEmbed projectId={projectIds.iris} />
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-medium mb-4 text-white flex items-center gap-2">
-                  <svg
-                    className="w-5 h-5 text-brand"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 10V3L4 14h7v7l9-11h-7z"
-                    />
-                  </svg>
-                  Client Component
-                </h3>
-                <div className="max-w-2xl">
-                  <ClientModrinthEmbed projectId={projectIds.elytraAssistant} />
-                </div>
-              </div>
-            </div>
-          </section> */}
         </div>
       </div>
     </main>
