@@ -187,7 +187,7 @@ export class ModrinthAPI {
    * @returns Formatted number string
    */
   static formatNumber(num: number): string {
-    return new Intl.NumberFormat("en-US", { notation: "compact" }).format(num);
+    return new Intl.NumberFormat("en-US", { notation: "compact", roundingMode: "floor" }).format(num);
   }
 
   /**
