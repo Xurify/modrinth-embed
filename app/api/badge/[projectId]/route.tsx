@@ -203,7 +203,6 @@ export async function GET(
       return new Response("Invalid variant", { status: 400 });
     }
 
-    // Load Jost for badge text (used by all variants)
     const fontsDir = join(process.cwd(), "public/assets/fonts");
     const [jost400, jost700] = await Promise.all([
       readFile(join(fontsDir, "Jost-Regular.ttf")),
