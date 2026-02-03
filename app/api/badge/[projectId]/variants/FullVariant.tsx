@@ -31,7 +31,7 @@ export const FullVariant = ({
       <div
         tw="flex flex-col w-full h-full bg-[#1a1c20] rounded-3xl overflow-hidden border-2 border-[#2D2D35] justify-center"
       >
-        <div tw="flex flex-col py-12 px-10 gap-6">
+        <div tw="flex flex-col py-14 px-10 gap-6">
           <div tw="flex items-center gap-6">
             <div
               tw={`flex items-center justify-center w-[140px] h-[140px] rounded-2xl overflow-hidden flex-shrink-0 ${
