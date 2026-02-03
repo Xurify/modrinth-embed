@@ -36,7 +36,7 @@ export const FullVariant = ({
             : "none",
         }}
       >
-        <div tw="flex flex-col flex-1 p-8 gap-6">
+        <div tw="flex flex-col flex-1 p-8 gap-6 justify-center">
           <div tw="flex items-center gap-6">
             <div
               tw={`flex items-center justify-center w-[140px] h-[140px] rounded-2xl overflow-hidden flex-shrink-0 ${
