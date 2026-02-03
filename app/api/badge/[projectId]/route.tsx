@@ -20,7 +20,6 @@ export async function GET(
   const { projectId } = await params;
   const data = await ModrinthAPI.getProject(projectId);
 
-  const validParams = new URLSearchParams();
   const variant = searchParams.get("variant") as "default" | "full" | "compact" || "default";
   const theme = searchParams.get("theme") as "dark" | "light" || "dark";
   const showDownloads = searchParams.get("showDownloads") !== "false";
@@ -32,13 +31,7 @@ export async function GET(
   const showButton = searchParams.get("showButton") !== "false";
   const showPadding = searchParams.get("showPadding") === "true";
 
-  validParams.set("variant", variant);
-  validParams.set("theme", theme);
-  validParams.set("showDownloads", showDownloads.toString());
-  validParams.set("showVersion", showVersion.toString());
-  validParams.set("showButton", showButton.toString());
-  validParams.set("showPadding", showPadding.toString());
-
+  // ETag for cache revalidation: project data + query params
   const contentHash = crypto
     .createHash('md5')
     .update(JSON.stringify({
@@ -89,6 +82,7 @@ export async function GET(
     const downloads = data.downloads.toString();
     const author = ModrinthAPI.getAuthor(data);
 
+    // Convert WebP icons to PNG data URL for compatibility
     let iconUrl = data.icon_url || undefined;
     if (iconUrl?.toLowerCase().endsWith(".webp")) {
       const response = await fetch(iconUrl);
@@ -106,10 +100,8 @@ export async function GET(
       iconUrl = `data:image/png;base64,${pngBuffer.toString("base64")}`;
     }
 
-    const formattedDownloads = ModrinthAPI.formatNumber(
-      parseInt(downloads, 10)
-    );
-    //const cacheDuration = ModrinthAPI.getCacheDuration(parseInt(downloads, 10));
+    const formattedDownloads = ModrinthAPI.formatNumber(parseInt(downloads, 10));
+    // Cache duration could be derived from download count: ModrinthAPI.getCacheDuration(parseInt(downloads, 10))
 
     const generateCompactDimensions = (project: ModrinthProject) => {
       const height = 32;
@@ -158,22 +150,13 @@ export async function GET(
       fullLayout.innerBorderWidth * 2;
     const fullHeight = fullInnerHeight + fullLayout.outerPaddingY * 2;
 
+    // Image dimensions per variant (full height is computed from layout)
+    const compactDimensions = generateCompactDimensions(data);
     const OPTIONS: Record<string, ImageResponseOptions> = {
-      default: {
-        width: 680,
-        height: 164,
-      },
-      full: {
-        width: showPadding ? 936 : 840,
-        height: fullHeight,
-      },
-      compact: {
-        width: generateCompactDimensions(data).width,
-        height: generateCompactDimensions(data).height,
-      },
+      default: { width: 680, height: 164 },
+      full: { width: showPadding ? 936 : 840, height: fullHeight },
+      compact: { width: compactDimensions.width, height: compactDimensions.height },
     };
-
-    const options = OPTIONS[variant];
 
     const getVariant = () => {
       switch (variant) {
@@ -207,7 +190,7 @@ export async function GET(
               showDownloads={showDownloads}
               showVersion={showVersion}
               versionNumber={latestVersion?.version_number || ""}
-              width={generateCompactDimensions(data).width}
+              width={compactDimensions.width}
             />
           );
         default:
@@ -220,15 +203,15 @@ export async function GET(
       return new Response("Invalid variant", { status: 400 });
     }
 
-    const jost400 = await readFile(
-      join(process.cwd(), "public/assets/fonts/Jost-Regular.ttf")
-    );
-    const jost700 = await readFile(
-      join(process.cwd(), "public/assets/fonts/Jost-Bold.ttf")
-    );
+    // Load Jost for badge text (used by all variants)
+    const fontsDir = join(process.cwd(), "public/assets/fonts");
+    const [jost400, jost700] = await Promise.all([
+      readFile(join(fontsDir, "Jost-Regular.ttf")),
+      readFile(join(fontsDir, "Jost-Bold.ttf")),
+    ]);
 
     return new ImageResponse(component, {
-      ...options,
+      ...OPTIONS[variant],
       fonts: [
         {
           name: "Jost",

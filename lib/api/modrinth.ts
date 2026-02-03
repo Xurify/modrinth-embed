@@ -101,13 +101,20 @@ export type ModrinthVersion = z.infer<typeof ModrinthVersionSchema>;
  */
 export class ModrinthAPI {
   /**
-   * Get a project by ID
-   * @param id - The ID of the project
-   * @returns The project or null if the project is not found
+   * Get a project by ID via our API (NEXT_PUBLIC_APP_URL).
+   * Single fetch to our cached proxy; only API route handlers call Modrinth directly.
    */
   static async getProject(id: string): Promise<ModrinthProject | null> {
-    const { data } = await this.fetchFromModrinth(`/project/${id}`, ModrinthProjectSchema);
-    return data;
+    try {
+      const url = new URL(`/api/modrinth/project/${id}`, process.env.NEXT_PUBLIC_APP_URL);
+      const response = await this.fetch(url);
+      if (!response.ok) return null;
+      const data = await response.json();
+      return data == null ? null : ModrinthProjectSchema.parse(data);
+    } catch (error) {
+      console.error("Error fetching project:", error);
+      return null;
+    }
   }
 
   /**
@@ -121,49 +128,43 @@ export class ModrinthAPI {
   }
 
   /**
-   * Get the versions of a project
-   * @param id - The ID of the project
-   * @returns The versions of the project
+   * Get versions of a project via our API (NEXT_PUBLIC_APP_URL).
+   * Single fetch to our cached proxy; only API route handlers call Modrinth directly.
    */
   static async getVersions(id: string): Promise<ModrinthVersion[]> {
-    const { data } = await this.fetchFromModrinth(`/project/${id}/version`, z.array(ModrinthVersionSchema));
-    return data || [];
+    try {
+      const url = new URL(`/api/modrinth/project/${id}/versions`, process.env.NEXT_PUBLIC_APP_URL);
+      const response = await this.fetch(url);
+      if (!response.ok) return [];
+      const data = await response.json();
+      return Array.isArray(data) ? z.array(ModrinthVersionSchema).parse(data) : [];
+    } catch (error) {
+      console.error("Error fetching versions:", error);
+      return [];
+    }
   }
 
   /**
    * Format a number with compact notation
-   * @param num The number to format
-   * @returns Formatted number string
+   * @param num - The number to format
+   * @returns Formatted number string (e.g. "1.2K", "3.4M")
    */
   static formatNumber(num: number): string {
     return new Intl.NumberFormat("en-US", { notation: "compact", roundingMode: "floor" }).format(num);
   }
 
   /**
-   * Get the cache duration for a project based on the number of downloads
-   * @param downloads - The number of downloads
-   * @returns The cache duration
+   * Get the cache duration for a project (used by API route handlers).
+   * @returns Cache duration in seconds (currently 1 hour)
    */
-  static getCacheDuration(downloads: number): number {
-    // TODO: Testing - will remove this later
+  static getCacheDuration(): number {
     return 3600;
-    if (downloads >= 1000000) {
-      return 604800; // 1 week
-    } else if (downloads >= 100000) {
-      return 86400; // 1 day
-    } else if (downloads >= 10000) {
-      return 7200; // 2 hours
-    } else if (downloads >= 1000) {
-      return 3600; // 1 hour
-    } else {
-      return 3600; // 1 hour
-    }
   }
 
   /**
-   * Get the author of a project
+   * Get the author of a project (derived from source_url).
    * @param project - The project
-   * @returns The author of the project
+   * @returns The author username or "Unknown"
    */
   static getAuthor(project: ModrinthProject): string {
     const author = project.source_url
@@ -173,10 +174,10 @@ export class ModrinthAPI {
   }
 
   /**
-   * Fetch data from Modrinth - Used by internal our API
-   * @param endpoint - The endpoint to fetch from
-   * @param schema - The schema to parse the data with
-   * @returns The data
+   * Fetch data from Modrinth. Used only by API route handlers (/api/modrinth/...).
+   * @param endpoint - The Modrinth API endpoint (e.g. "/project/123")
+   * @param schema - Zod schema to parse and validate the response
+   * @returns Parsed data and rate-limit headers, or null on failure
    */
   static async fetchFromModrinth<T extends z.ZodType>(
     endpoint: string,
@@ -190,10 +191,7 @@ export class ModrinthAPI {
     };
   }> {
     try {
-      const url = new URL(
-        `https://api.modrinth.com/v2${endpoint}`,
-        process.env.NEXT_PUBLIC_APP_URL
-      );
+      const url = `https://api.modrinth.com/v2${endpoint}`;
       const response = await this.fetch(url, {
         headers: {
           "User-Agent": "xurify/modrinth-embed/1.0.0 (contact@xurify.com)",
