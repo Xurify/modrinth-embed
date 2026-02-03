@@ -31,7 +31,7 @@ export const FullVariant = ({
       <div
         tw="flex flex-col w-full h-full bg-[#1a1c20] rounded-3xl overflow-hidden border-2 border-[#2D2D35] justify-center"
       >
-        <div tw="flex flex-col py-16 px-10 gap-8">
+        <div tw="flex flex-col py-12 px-10 gap-6">
           <div tw="flex items-center gap-6">
             <div
               tw={`flex items-center justify-center w-[140px] h-[140px] rounded-2xl overflow-hidden flex-shrink-0 ${
@@ -73,12 +73,12 @@ export const FullVariant = ({
 
           <p
             tw="text-2xl text-[#d1d5db] leading-relaxed m-0"
-            style={{ height: 100, lineHeight: "1.6", overflow: "hidden" }}
+            style={{ height: 80, lineHeight: "1.6", overflow: "hidden" }}
           >
             {truncate(project.description, 155)}
           </p>
 
-          <div tw="flex items-center gap-4" style={{ minHeight: 60 }}>
+          <div tw="flex items-center gap-4" style={{ minHeight: 52 }}>
             {showDownloads && (
               <div tw="flex items-center bg-[#26292e] rounded-xl px-5 py-3">
                 <svg
@@ -148,7 +148,7 @@ export const FullVariant = ({
             <div tw="flex w-full">
               <div
                 tw="flex items-center justify-center gap-3 px-8 rounded-2xl text-xl font-bold text-[#0a0a0a] w-full bg-[#1bd96a]"
-                style={{ height: 60 }}
+                style={{ height: 56 }}
               >
                 <svg
                   width="28"

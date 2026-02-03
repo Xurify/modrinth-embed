@@ -139,12 +139,12 @@ export async function GET(
     };
 
     const fullLayout = {
-      paddingY: 64,
-      gap: 32,
-      headerHeight: 150,
-      descriptionHeight: 100,
-      statsHeight: 60,
-      buttonHeight: 60,
+      paddingY: 56,
+      gap: 24,
+      headerHeight: 140,
+      descriptionHeight: 80,
+      statsHeight: 52,
+      buttonHeight: 56,
       innerBorderWidth: 2,
       outerPaddingY: showPadding ? 48 : 0,
     };
