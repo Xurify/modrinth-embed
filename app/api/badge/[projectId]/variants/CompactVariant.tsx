@@ -20,7 +20,7 @@ export const CompactVariant = ({
 }: CompactVariantProps) => {
   return (
     <div
-      tw="flex items-center h-8 bg-[#16181C] border border-[#2D2D35] rounded-lg px-3"
+      tw="flex items-center h-8 bg-[#16181C] border border-[#2D2D35] rounded-lg px-3 font-sans"
       style={{ width }}
     >
       {project.icon_url && (
@@ -33,15 +33,15 @@ export const CompactVariant = ({
           style={{ objectFit: "contain" }}
         />
       )}
-      <div tw="flex items-center gap-2 text-white text-sm font-medium">
+      <div tw="flex items-center gap-2 text-white text-[15px] font-bold">
         <span tw="truncate">{truncate(project.title, 20)}</span>
         {showDownloads && (
-          <span tw="text-[#A1A1AA]">
+          <span tw="text-[#A1A1AA] font-medium ml-1">
             {ModrinthAPI.formatNumber(project.downloads)}
           </span>
         )}
         {showVersion && versionNumber && (
-          <span tw="text-[#A1A1AA]">v{versionNumber}</span>
+          <span tw="text-[#A1A1AA] font-medium ml-1">v{versionNumber}</span>
         )}
       </div>
     </div>

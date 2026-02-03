@@ -9,24 +9,26 @@ export const dynamic = "force-static";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#1B1D1F] p-4 pb-16 font-minecraft">
+    <main className="min-h-screen bg-[#1B1D1F] p-4 pb-16">
       <div className="container mx-auto">
-        <h1 className="text-4xl font-bold mb-4 text-white flex items-center gap-2">
+          <div className="flex gap-1">
           <img
             src="/icon.png"
             alt="Modrinth Embed"
-            className="w-8 h-8"
+            className="w-10 h-10"
           />
-          Modrinth Embed
+        <h1 className="font-heading text-4xl font-bold mb-4 text-white flex items-center gap-3">
+          <span className="sr-only">M</span>odrinth Embed
         </h1>
-        <p className="text-gray-400 mb-8 max-w-3xl font-sans">
+          </div>
+        <p className="text-gray-400 mb-10 max-w-3xl text-lg leading-relaxed">
           A modern way to embed Modrinth projects on your website, powered by
           the{" "}
           <a
             href="https://docs.modrinth.com/api"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-brand hover:underline"
+            className="text-brand hover:underline font-medium"
           >
             Modrinth API
           </a>
@@ -37,17 +39,17 @@ export default function Home() {
 
         <div className="space-y-12">
           <section>
-            <h2 className="text-3xl font-semibold mb-2 text-white">
+            <h2 className="font-heading text-3xl font-semibold mb-2 text-white">
               Project Badges
             </h2>
-            <p className="text-gray-400 mb-6 font-sans">
+            <p className="text-gray-400 mb-6">
               Choose from three different badge styles: Default, Compact, and
               Full. Each style can be customized with various options.
             </p>
 
             <div className="space-y-8">
               <div>
-                <h3 className="text-2xl font-medium mb-4 text-white">
+                <h3 className="font-heading text-2xl font-medium mb-4 text-white">
                   Default Badge
                 </h3>
                 <div className="space-y-4">
@@ -73,7 +75,7 @@ export default function Home() {
               </div>
 
               <div>
-                <h3 className="text-2xl font-medium mb-4 text-white">
+                <h3 className="font-heading text-2xl font-medium mb-4 text-white">
                   Compact Badge
                 </h3>
                 <div className="space-y-4">
@@ -98,7 +100,7 @@ export default function Home() {
               </div>
 
               <div>
-                <h3 className="text-2xl font-medium mb-4 text-white">
+                <h3 className="font-heading text-2xl font-medium mb-4 text-white">
                   Full Badge
                 </h3>
                 <div className="space-y-4">

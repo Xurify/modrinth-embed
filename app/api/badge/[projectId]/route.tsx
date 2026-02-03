@@ -1,6 +1,5 @@
-import { ImageResponse } from "@takumi-rs/image-response";
+import { ImageResponse, ImageResponseOptions } from "@takumi-rs/image-response";
 import { NextRequest } from "next/server";
-import { ImageResponseOptions } from "@takumi-rs/image-response";
 import { join } from "path";
 import { readFile } from "fs/promises";
 import sharp from "sharp";
@@ -9,6 +8,7 @@ import { ModrinthAPI, ModrinthProject } from "../../../../lib/api/modrinth";
 import DefaultVariant from "./variants/DefaultVariant";
 import FullVariant from "./variants/FullVariant";
 import CompactVariant from "./variants/CompactVariant";
+import { truncate } from "../../../../lib/utils";
 
 export const runtime = "nodejs";
 
@@ -113,20 +113,20 @@ export async function GET(
 
     const generateCompactDimensions = (project: ModrinthProject) => {
       const height = 32;
-      const fontSize = 14;
+      const fontSize = 15;
       const paddingX = 12;
       const iconSize = 20;
       const gap = 8;
       const textGap = 8;
-      const avgCharWidth = fontSize * 0.6;
+      const avgCharWidth = fontSize * 0.65; // Slightly wider for bold
 
-      const titleWidth = project.title.length * avgCharWidth;
+      const titleWidth = truncate(project.title, 20).length * avgCharWidth;
       const downloadsWidth = showDownloads
-        ? ModrinthAPI.formatNumber(project.downloads).length * avgCharWidth
+        ? ModrinthAPI.formatNumber(project.downloads).length * (fontSize * 0.55)
         : 0;
       const versionWidth =
         showVersion && latestVersion
-          ? (`v${latestVersion.version_number}`).length * avgCharWidth
+          ? (`v${latestVersion.version_number}`).length * (fontSize * 0.55)
           : 0;
 
       let width = paddingX * 2 + titleWidth;
@@ -135,7 +135,7 @@ export async function GET(
       if (showDownloads) width += downloadsWidth + textGap;
       if (showVersion && latestVersion) width += versionWidth + textGap;
 
-      return { width, height };
+      return { width: Math.ceil(width), height };
     };
 
     const fullLayout = {
