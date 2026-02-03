@@ -1,5 +1,6 @@
-import { ImageResponse } from "next/og";
-import { ImageResponseOptions, NextRequest } from "next/server";
+import { ImageResponse } from "@takumi-rs/image-response";
+import { NextRequest } from "next/server";
+import { ImageResponseOptions } from "@takumi-rs/image-response";
 import { join } from "path";
 import { readFile } from "fs/promises";
 import sharp from "sharp";
@@ -23,7 +24,11 @@ export async function GET(
   const variant = searchParams.get("variant") as "default" | "full" | "compact" || "default";
   const theme = searchParams.get("theme") as "dark" | "light" || "dark";
   const showDownloads = searchParams.get("showDownloads") !== "false";
-  const showVersion = searchParams.get("showVersion") !== "false";
+  const showVersionParam = searchParams.get("showVersion");
+  const showVersion =
+    variant === "compact"
+      ? showVersionParam === "true"
+      : showVersionParam !== "false";
   const showButton = searchParams.get("showButton") !== "false";
   const showPadding = searchParams.get("showPadding") === "true";
 
@@ -93,7 +98,10 @@ export async function GET(
       const arrayBuffer = await response.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      const pngBuffer = await sharp(buffer).png().toBuffer();
+      const pngBuffer = await sharp(buffer)
+        .resize(280, 280, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+        .png()
+        .toBuffer();
 
       iconUrl = `data:image/png;base64,${pngBuffer.toString("base64")}`;
     }
@@ -106,20 +114,32 @@ export async function GET(
     const generateCompactDimensions = (project: ModrinthProject) => {
       const height = 32;
       const fontSize = 14;
-      const padding = 12;
-      const iconSize = 24;
-      let width = padding * 2 + project.title.length * (fontSize * 0.6);
-      if (project.icon_url) width += iconSize + 8;
-      if (showDownloads)
-        width +=
-          ModrinthAPI.formatNumber(project.downloads).length *
-            (fontSize * 0.6) +
-          16;
-      if (showVersion && latestVersion)
-        width += latestVersion.version_number.length * (fontSize * 0.6) + 24;
+      const paddingX = 12;
+      const iconSize = 20;
+      const gap = 8;
+      const textGap = 8;
+      const avgCharWidth = fontSize * 0.6;
+
+      const titleWidth = project.title.length * avgCharWidth;
+      const downloadsWidth = showDownloads
+        ? ModrinthAPI.formatNumber(project.downloads).length * avgCharWidth
+        : 0;
+      const versionWidth =
+        showVersion && latestVersion
+          ? (`v${latestVersion.version_number}`).length * avgCharWidth
+          : 0;
+
+      let width = paddingX * 2 + titleWidth;
+
+      if (project.icon_url) width += iconSize + gap;
+      if (showDownloads) width += downloadsWidth + textGap;
+      if (showVersion && latestVersion) width += versionWidth + textGap;
 
       return { width, height };
     };
+
+    const fullBaseHeight = showPadding ? 600 : 480;
+    const fullHeight = showButton ? fullBaseHeight + 80 : fullBaseHeight;
 
     const OPTIONS: Record<string, ImageResponseOptions> = {
       default: {
@@ -127,8 +147,8 @@ export async function GET(
         height: 160,
       },
       full: {
-        width: showPadding ? 1200 : 900,
-        height: showPadding ? 600 : 405,
+        width: showPadding ? 1020 : 900,
+        height: fullHeight,
       },
       compact: {
         width: generateCompactDimensions(data).width,
@@ -137,29 +157,6 @@ export async function GET(
     };
 
     const options = OPTIONS[variant];
-
-    const colors = {
-      light: {
-        background: "#ffffff",
-        background2: "#f9fafb",
-        text: "#1f2937",
-        secondaryText: "#585858",
-        border: "#e5e7eb",
-        button: "#10B981",
-        buttonText: "#ffffff",
-      },
-      dark: {
-        background: "#2D2D2D",
-        background2: "#16181C",
-        text: "#ffffff",
-        secondaryText: "#9BA0A4",
-        border: "#404040",
-        button: "#10B981",
-        buttonText: "#ffffff",
-      },
-    };
-
-    const themeColors = theme === "dark" ? colors.dark : colors.light;
 
     const getVariant = () => {
       switch (variant) {
@@ -178,7 +175,6 @@ export async function GET(
             <FullVariant
               iconUrl={iconUrl}
               project={data}
-              themeColors={themeColors}
               showPadding={showPadding}
               showDownloads={showDownloads}
               showVersion={showVersion}
@@ -191,7 +187,6 @@ export async function GET(
             <CompactVariant
               iconUrl={iconUrl}
               project={data}
-              themeColors={themeColors}
               showDownloads={showDownloads}
               showVersion={showVersion}
               versionNumber={latestVersion?.version_number || ""}

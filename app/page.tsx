@@ -55,7 +55,6 @@ export default function Home() {
             </p>
 
             <div className="space-y-8">
-              {/* Default Variant */}
               <div>
                 <h3 className="text-xl font-medium mb-4 text-white">
                   Default Badge
@@ -82,7 +81,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Compact Variant */}
               <div>
                 <h3 className="text-xl font-medium mb-4 text-white">
                   Compact Badge
@@ -108,7 +106,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Full Variant */}
               <div>
                 <h3 className="text-xl font-medium mb-4 text-white">
                   Full Badge
