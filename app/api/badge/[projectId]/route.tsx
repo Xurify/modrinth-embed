@@ -138,16 +138,33 @@ export async function GET(
       return { width, height };
     };
 
-    const fullBaseHeight = showPadding ? 600 : 480;
-    const fullHeight = showButton ? fullBaseHeight + 80 : fullBaseHeight;
+    const fullLayout = {
+      paddingY: 64,
+      gap: 32,
+      headerHeight: 150,
+      descriptionHeight: 100,
+      statsHeight: 60,
+      buttonHeight: 60,
+      innerBorderWidth: 2,
+      outerPaddingY: showPadding ? 48 : 0,
+    };
+    const fullInnerHeight =
+      fullLayout.paddingY * 2 +
+      fullLayout.headerHeight +
+      fullLayout.descriptionHeight +
+      fullLayout.statsHeight +
+      fullLayout.gap * (showButton ? 3 : 2) +
+      (showButton ? fullLayout.buttonHeight : 0) +
+      fullLayout.innerBorderWidth * 2;
+    const fullHeight = fullInnerHeight + fullLayout.outerPaddingY * 2;
 
     const OPTIONS: Record<string, ImageResponseOptions> = {
       default: {
         width: 680,
-        height: 160,
+        height: 164,
       },
       full: {
-        width: showPadding ? 1020 : 900,
+        width: showPadding ? 936 : 840,
         height: fullHeight,
       },
       compact: {

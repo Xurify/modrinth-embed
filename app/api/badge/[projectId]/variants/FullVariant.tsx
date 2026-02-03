@@ -25,18 +25,13 @@ export const FullVariant = ({
   return (
     <div
       tw={`flex w-full h-full ${
-        showPadding ? "p-6 bg-[#111214]" : "bg-transparent"
+        showPadding ? "p-12 bg-[#111214]" : "bg-transparent"
       }`}
     >
       <div
-        tw="flex flex-col w-full h-full bg-[#1a1c20] rounded-3xl overflow-hidden border-2 border-[#2D2D35]"
-        style={{
-          boxShadow: showPadding
-            ? "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
-            : "none",
-        }}
+        tw="flex flex-col w-full h-full bg-[#1a1c20] rounded-3xl overflow-hidden border-2 border-[#2D2D35] justify-center"
       >
-        <div tw="flex flex-col flex-1 p-8 gap-6 justify-center">
+        <div tw="flex flex-col py-16 px-10 gap-8">
           <div tw="flex items-center gap-6">
             <div
               tw={`flex items-center justify-center w-[140px] h-[140px] rounded-2xl overflow-hidden flex-shrink-0 ${
@@ -76,11 +71,14 @@ export const FullVariant = ({
             </div>
           </div>
 
-          <p tw="text-2xl text-[#d1d5db] leading-relaxed m-0">
+          <p
+            tw="text-2xl text-[#d1d5db] leading-relaxed m-0"
+            style={{ height: 100, lineHeight: "1.6", overflow: "hidden" }}
+          >
             {truncate(project.description, 155)}
           </p>
 
-          <div tw="flex items-center gap-4">
+          <div tw="flex items-center gap-4" style={{ minHeight: 60 }}>
             {showDownloads && (
               <div tw="flex items-center bg-[#26292e] rounded-xl px-5 py-3">
                 <svg
@@ -149,7 +147,8 @@ export const FullVariant = ({
           {showButton && (
             <div tw="flex w-full">
               <div
-                tw="flex items-center justify-center gap-3 py-4 px-8 rounded-2xl text-xl font-bold text-[#0a0a0a] w-full bg-[#1bd96a]"
+                tw="flex items-center justify-center gap-3 px-8 rounded-2xl text-xl font-bold text-[#0a0a0a] w-full bg-[#1bd96a]"
+                style={{ height: 60 }}
               >
                 <svg
                   width="28"

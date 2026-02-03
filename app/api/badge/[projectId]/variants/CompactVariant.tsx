@@ -30,7 +30,7 @@ export const CompactVariant = ({
           width={20}
           height={20}
           tw="rounded-md h-5 w-5 mr-2"
-          style={{ imageRendering: "pixelated" }}
+          style={{ objectFit: "contain" }}
         />
       )}
       <div tw="flex items-center gap-2 text-white text-sm font-medium">
