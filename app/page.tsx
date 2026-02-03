@@ -11,10 +11,10 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#1B1D1F] p-4 pb-16">
       <div className="container mx-auto">
-        <div className="flex gap-1">
-          <img src="/icon.png" alt="Modrinth Embed" className="w-10 h-10" />
-          <h1 className="font-heading text-4xl font-bold mb-4 text-white flex items-center gap-3">
-            <span className="sr-only">M</span>odrinth Embed
+        <div className="flex gap-4">
+          <img src="/icon.png" alt="Modrinth Embed" className="w-14 h-14" />
+          <h1 className="font-heading text-4xl font-bold text-white flex items-center gap-3">
+            Modrinth Embed
           </h1>
         </div>
         <p className="text-gray-400 mb-10 max-w-3xl text-lg leading-relaxed">
