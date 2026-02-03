@@ -21,7 +21,6 @@ export const FullVariant = ({
   versionNumber,
 }: FullVariantProps) => {
   const category = project.categories[0] || project.project_type;
-  const loaders = project.loaders.slice(0, 3).join(" • ");
 
   return (
     <div
@@ -72,18 +71,13 @@ export const FullVariant = ({
                   {truncate(ModrinthAPI.getAuthor(project), 20)}
                 </span>
                 <span tw="text-[#4b5563] mx-3">•</span>
-                <span tw="text-[#9ca3af] capitalize">{category}</span>
+                <span tw="text-[#9ca3af] capitalize">{category.replace(/-/g, " ")}</span>
               </div>
-              {loaders && (
-                <div tw="flex mt-3">
-                  <span tw="text-lg text-[#6b7280] capitalize">{loaders}</span>
-                </div>
-              )}
             </div>
           </div>
 
           <p tw="text-2xl text-[#d1d5db] leading-relaxed m-0">
-            {truncate(project.description, showPadding ? 180 : 140)}
+            {truncate(project.description, 155)}
           </p>
 
           <div tw="flex items-center gap-4">

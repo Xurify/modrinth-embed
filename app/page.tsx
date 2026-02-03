@@ -112,21 +112,21 @@ export default function Home() {
                 </h3>
                 <div className="space-y-4">
                   <a
-                    href={`https://modrinth.com/mod/${projectIds.sodium}`}
+                    href={`https://modrinth.com/mod/${projectIds.elytraAssistant}`}
                     className="inline-flex"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img
-                      src={`/${projectIds.sodium}.png?variant=full`}
-                      alt="Sodium"
+                      src={`/${projectIds.elytraAssistant}.png?variant=full`}
+                      alt="Elytra Assistant"
                       width="600"
                       height="260"
                     />
                   </a>
                   <div className="bg-[#2D2F31] text-white p-4 rounded-lg overflow-x-auto">
                     <pre className="text-sm">
-                      <code>{`<img src="https://modrinth-embed.vercel.app/AANobbMI.png?variant=full" alt="Modrinth Project" width="900" height="400" />`}</code>
+                      <code>{`<img src="https://modrinth-embed.vercel.app/${projectIds.elytraAssistant}.png?variant=full" alt="Modrinth Project" width="900" height="400" />`}</code>
                     </pre>
                   </div>
                 </div>
