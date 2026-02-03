@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   serverExternalPackages: ["@takumi-rs/image-response", "@takumi-rs/core"],
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         hostname: "cdn.modrinth.com",

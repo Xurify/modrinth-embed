@@ -30,7 +30,7 @@ export const FullVariant = ({
       }`}
     >
       <div
-        tw="flex flex-col w-full h-full bg-[#1a1c20] rounded-3xl overflow-hidden"
+        tw="flex flex-col w-full h-full bg-[#1a1c20] rounded-3xl overflow-hidden border-2 border-[#2D2D35]"
         style={{
           boxShadow: showPadding
             ? "0 25px 50px -12px rgba(0, 0, 0, 0.5)"
