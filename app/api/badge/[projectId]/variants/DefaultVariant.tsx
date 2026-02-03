@@ -85,7 +85,7 @@ export const DefaultVariant = ({
         </div>
       </div>
 
-      <div tw="ml-auto flex-shrink-0">
+      <div tw="ml-auto flex-shrink-0 flex items-center" style={{ width: 40, height: 40 }}>
         <ModrinthIcon />
       </div>
     </div>

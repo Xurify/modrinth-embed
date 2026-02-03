@@ -7,8 +7,8 @@ export const ModrinthIcon = () => (
     strokeMiterlimit="2"
     clipRule="evenodd"
     viewBox="0 0 600 593"
-    width="48"
-    height="48"
+    width="40"
+    height="40"
     aria-hidden="true"
   >
     <g fill="#1bd96a">
