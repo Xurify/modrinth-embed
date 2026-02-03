@@ -29,7 +29,7 @@ export const CompactVariant = ({
           alt=""
           width={20}
           height={20}
-          tw="rounded h-5 w-5 mr-2"
+          tw="rounded-md h-5 w-5 mr-2"
           style={{ imageRendering: "pixelated" }}
         />
       )}

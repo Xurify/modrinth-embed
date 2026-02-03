@@ -51,7 +51,7 @@ export const FullVariant = ({
                   src={iconUrl}
                   width="140"
                   height="140"
-                  tw="w-full h-full"
+                  tw="w-full h-full rounded-2xl"
                   style={{ objectFit: "cover" }}
                   alt=""
                 />

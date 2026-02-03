@@ -26,14 +26,14 @@ export const DefaultVariant = ({
       } border-2 rounded-2xl p-6 font-sans shadow-xl`}
     >
       <div
-        tw={`flex items-center justify-center w-[110px] h-[110px] rounded-xl overflow-hidden flex-shrink-0 p-2 ${
+        tw={`flex items-center justify-center w-[110px] h-[110px] rounded-2xl overflow-hidden flex-shrink-0 p-2 ${
           !iconUrl ? "bg-gradient-to-b from-[#10B981] to-[#157a59]" : "bg-[#8BC34A]/20"
         }`}
       >
         {iconUrl ? (
           <img
             src={iconUrl}
-            tw="w-full h-full object-contain"
+            tw="w-full h-full object-contain rounded-xl"
             style={{ objectFit: "contain" }}
             alt="Mod logo"
           />
