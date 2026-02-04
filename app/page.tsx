@@ -35,8 +35,7 @@ export default function Home() {
             <span className="text-brand">Embed</span>
           </h1>
           <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            Drop-in image badges for any Modrinth project. No JavaScript.
-            Powered by the{" "}
+            A modern way to embed CurseForge projects on your website, powered{" "}
             <a
               href="https://docs.modrinth.com/api"
               target="_blank"
@@ -70,14 +69,13 @@ export default function Home() {
             Pick a style
           </h2>
           <p className="text-gray-400 text-center mb-14 max-w-xl mx-auto">
-            Three badge variants. One <code className="text-brand">&lt;img&gt;</code> tag.
+            Three badge variants. One{" "}
+            <code className="text-brand">&lt;img&gt;</code> tag.
           </p>
 
           <div className="flex flex-col md:flex-row gap-6 md:items-start">
             <div className="group rounded-2xl border border-white/10 bg-[#121214] p-4 min-h-[280px] flex flex-col transition hover:border-brand/30 hover:bg-[#161618] md:flex-1 md:max-w-[380px]">
-              <h3 className="font-heading text-2xl text-white mb-1">
-                Default
-              </h3>
+              <h3 className="font-heading text-2xl text-white mb-1">Default</h3>
               <p className="text-sm text-gray-500 mb-3">
                 Title, thumbnail, stats
               </p>
@@ -106,9 +104,7 @@ export default function Home() {
             </div>
 
             <div className="group rounded-2xl border border-white/10 bg-[#121214] p-6 transition hover:border-brand/30 hover:bg-[#161618] md:flex-1 md:max-w-[420px]">
-              <h3 className="font-heading text-2xl text-white mb-1">
-                Full
-              </h3>
+              <h3 className="font-heading text-2xl text-white mb-1">Full</h3>
               <p className="text-sm text-gray-500 mb-4">
                 Rich card with description
               </p>
@@ -137,9 +133,7 @@ export default function Home() {
             </div>
 
             <div className="group rounded-2xl border border-white/10 bg-[#121214] p-4 min-h-[280px] flex flex-col transition hover:border-brand/30 hover:bg-[#161618] md:flex-1 md:max-w-[380px]">
-              <h3 className="font-heading text-2xl text-white mb-1">
-                Compact
-              </h3>
+              <h3 className="font-heading text-2xl text-white mb-1">Compact</h3>
               <p className="text-sm text-gray-500 mb-3">
                 One line, small footprint
               </p>
