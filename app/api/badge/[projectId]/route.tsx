@@ -30,6 +30,14 @@ export async function GET(
       : showVersionParam !== "false";
   const showButton = searchParams.get("showButton") !== "false";
   const showPadding = searchParams.get("showPadding") === "true";
+  /** Compact only: 1 or 2. 2 = 2x resolution for sharp display on retina. */
+  const scale =
+    variant === "compact"
+      ? Math.min(
+          2,
+          Math.max(1, parseInt(searchParams.get("scale") ?? "1", 10) || 1),
+        )
+      : 1;
 
   // ETag for cache revalidation: project data + query params
   const contentHash = crypto
@@ -47,6 +55,7 @@ export async function GET(
         showVersion,
         showButton,
         showPadding,
+        scale,
       }
     }))
     .digest('hex');
@@ -155,7 +164,10 @@ export async function GET(
     const OPTIONS: Record<string, ImageResponseOptions> = {
       default: { width: 680, height: 164 },
       full: { width: showPadding ? 936 : 840, height: fullHeight },
-      compact: { width: compactDimensions.width, height: compactDimensions.height },
+      compact: {
+        width: compactDimensions.width * scale,
+        height: compactDimensions.height * scale,
+      },
     };
 
     const getVariant = () => {
@@ -191,6 +203,7 @@ export async function GET(
               showVersion={showVersion}
               versionNumber={latestVersion?.version_number || ""}
               width={compactDimensions.width}
+              scale={scale}
             />
           );
         default:

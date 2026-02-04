@@ -35,7 +35,7 @@ export default function Home() {
             <span className="text-brand">Embeds</span>
           </h1>
           <p className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            A modern way to embed CurseForge projects on your website, powered{" "}
+            A modern way to embed Modrinth projects on your website, powered{" "}
             <a
               href="https://docs.modrinth.com/api"
               target="_blank"

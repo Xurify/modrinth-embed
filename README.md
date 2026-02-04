@@ -33,6 +33,16 @@ A modern way to embed Modrinth projects on your website using dynamic badges. Po
 />
 ```
 
+Compact at 2× resolution (high-DPI):
+
+```html
+<img 
+  src="https://modrinth-embed.vercel.app/IRm6z3S7.png?variant=compact&scale=2" 
+  alt="Modrinth Project" 
+  height="48" 
+/>
+```
+
 ### Full Badge
 
 ```html
@@ -56,6 +66,10 @@ You can customize the badge appearance using URL parameters:
 - `theme`: Change color theme
   - `dark` (Default)
   - `light`
+
+- `scale`: Compact only – resolution multiplier for high-DPI
+  - `1` (Default)
+  - `2` – 2× resolution (e.g. for retina)
 
 - Display options:
   - `showDownloads=true|false` - Show/hide download count
